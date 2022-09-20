@@ -48,10 +48,9 @@ class DSRNNCoupledSimulator(ASTSimulator):
 						 config=self.configs[0], ax=ax, test_case=-1)
         baseEnv = self.envs_test.venv.envs[0].env
         print('[DEBUG]', self.envs_test)
-        print('[DEBUG]', baseEnv)
-        obs_test = self.envs_test.reset()
+        print('[DEBUG]', self.envs_test.venv.envs)
+        self.obs_test = self.envs_test.reset()
 
-        print(obs_test)
 
 
         # Load each DSRNN model
@@ -113,6 +112,7 @@ class DSRNNCoupledSimulator(ASTSimulator):
         self.eval_masks = []
         for i in range(len(self.models)):
             device = torch.device("cuda" if self.configs[i].training.cuda else "cpu")
+            print(device)
             num_processes = 1
             rnn_factor = 1
             node_num = 1
@@ -151,13 +151,14 @@ class DSRNNCoupledSimulator(ASTSimulator):
             # Compute action for each robot policy
             with torch.no_grad():
                 _, action, _, eval_recurrent_hidden_states = self.models[i].act(
-                    self.observations[i],
+                    self.obs_test,
                     self.eval_recurrent_hidden_states[i],
                     self.eval_masks[i],
                     deterministic=True)
             
             # Step simulation forward
-            obs, rew, done, infos = self.envs[i].step(action)
+            #obs, rew, done, infos = self.envs[i].step(action)
+            obs, rew, done, infos = self.envs_test.step(action)
 
             # Update observation
             self.observations[i] = copy.copy(obs)

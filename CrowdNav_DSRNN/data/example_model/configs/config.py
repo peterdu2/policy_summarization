@@ -12,9 +12,9 @@ class Config(object):
     env.time_limit = 50
     env.time_step = 0.25
     env.val_size = 100
-    env.test_size = 500
+    env.test_size = 5
     env.randomize_attributes = True
-    env.seed = 0  # env random seed
+    env.seed = 1  # env random seed
 
     reward = BaseConfig()
     reward.success_reward = 10

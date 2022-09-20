@@ -39,7 +39,6 @@ def main():
 		print('Failed to get Config function from ', test_args.model_dir, '/config.py')
 		from crowd_nav.configs.config import Config
 
-
 	config = Config()
 
 

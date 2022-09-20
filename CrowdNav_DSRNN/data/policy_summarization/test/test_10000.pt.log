@@ -1,0 +1,13 @@
+2022-09-19 19:00:19, INFO: robot FOV 0.660000
+2022-09-19 19:00:19, INFO: humans FOV 2.000000
+2022-09-19 19:00:19, INFO: Create other envs with new settings
+2022-09-19 19:00:19, INFO: human number: 5
+2022-09-19 19:00:19, INFO: Randomize human's radius and preferred speed
+2022-09-19 19:00:19, INFO: Circle width: 6
+2022-09-19 19:00:19, INFO: robot FOV 2.073451
+2022-09-19 19:00:19, INFO: humans FOV 6.283185
+2022-09-19 19:00:45, INFO: TEST  has success rate: 0.73, collision rate: 0.25, timeout rate: 0.02, nav time: 10.90, total reward: 15.3453
+2022-09-19 19:00:45, INFO: Frequency of being in danger: 0.02 and average min separate distance in danger: 0.15
+2022-09-19 19:00:45, INFO: TEST  has average path length: 242.49, CHC: 13.39
+2022-09-19 19:00:45, INFO: Collision cases: 2 6 7 9 11 18 19 23 26 29 30 49 55 56 58 60 70 71 72 73 75 76 80 90 93
+2022-09-19 19:00:45, INFO: Timeout cases: 27 74

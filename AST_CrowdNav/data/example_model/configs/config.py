@@ -29,7 +29,7 @@ class Config(object):
     sim = BaseConfig()
     sim.render = False # show GUI for visualization
     sim.circle_radius = 6
-    sim.human_num = 5
+    sim.human_num = 10
     # Group environment: set to true; FoV environment: false
     sim.group_human = False
 

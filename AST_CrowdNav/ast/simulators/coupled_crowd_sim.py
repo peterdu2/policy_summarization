@@ -30,8 +30,7 @@ class DSRNNCoupledSimulator(ASTSimulator):
             self.config_filepaths.append(path)
             self.configs.append(self.import_config(self.config_filepaths[i]))
 
-
-        # Create gym environments
+        # Create gym environments (device)
         self.envs = []
         for i in range(len(self.configs)):
             # Only create plot for first environment
@@ -39,19 +38,18 @@ class DSRNNCoupledSimulator(ASTSimulator):
                 ax = self.create_render_axis()
             else:
                 ax = None
-            env = self.make_env(self.configs[i], ax)
+            # Create env on device
+            device = torch.device("cuda" if self.configs[i].training.cuda else "cpu")
+            env = make_vec_envs(env_name=self.configs[i].env.env_name,
+                                seed=self.configs[i].env.seed,
+                                num_processes=1,
+						        gamma=self.configs[i].reward.gamma,
+                                log_dir=None, 
+                                device=device,
+                                allow_early_resets=True,
+						        config=self.configs[0],
+                                ax=ax)
             self.envs.append(env)
-
-        ax = self.create_render_axis()
-        self.envs_test = make_vec_envs(self.configs[0].env.env_name, self.configs[0].env.seed, 1,
-						 self.configs[0].reward.gamma, '.', 'cuda', allow_early_resets=True,
-						 config=self.configs[0], ax=ax, test_case=-1)
-        baseEnv = self.envs_test.venv.envs[0].env
-        print('[DEBUG]', self.envs_test)
-        print('[DEBUG]', self.envs_test.venv.envs)
-        self.obs_test = self.envs_test.reset()
-
-
 
         # Load each DSRNN model
         self.model_filepaths = []
@@ -75,7 +73,6 @@ class DSRNNCoupledSimulator(ASTSimulator):
 
             self.models.append(actor_critic)
 
-        
         # Reset simulation and initialize hidden states
         self.reset()
 
@@ -86,6 +83,7 @@ class DSRNNCoupledSimulator(ASTSimulator):
         config = config_class()
         return config
 
+
     def create_render_axis(self):
         fig, ax = plt.subplots(figsize=(7, 7))
         ax.set_xlim(-10, 10)
@@ -93,6 +91,7 @@ class DSRNNCoupledSimulator(ASTSimulator):
         ax.set_xlabel('x(m)', fontsize=16)
         ax.set_ylabel('y(m)', fontsize=16)
         return ax
+
 
     def make_env(self, config, ax):
         env = gym.make(config.env.env_name)
@@ -103,6 +102,7 @@ class DSRNNCoupledSimulator(ASTSimulator):
         env.nenv = 1
         return env
 
+
     def render(self):
         self.envs[0].render()
 
@@ -112,7 +112,6 @@ class DSRNNCoupledSimulator(ASTSimulator):
         self.eval_masks = []
         for i in range(len(self.models)):
             device = torch.device("cuda" if self.configs[i].training.cuda else "cpu")
-            print(device)
             num_processes = 1
             rnn_factor = 1
             node_num = 1
@@ -143,7 +142,6 @@ class DSRNNCoupledSimulator(ASTSimulator):
 
         # Reset hidden states
         self.init_hidden_states()
-
 
 
     def step(self):

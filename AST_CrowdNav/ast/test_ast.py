@@ -6,6 +6,6 @@ if __name__ == '__main__':
     model_names = ['27776.pt', '27776.pt']
     sim = DSRNNCoupledSimulator(model_dirs, config_name, model_names)
 
-    for i in range(10):
-        sim.render()
-        sim.step()
+    # for i in range(10):
+    #     sim.render()
+    #     sim.step()

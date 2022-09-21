@@ -30,7 +30,7 @@ class DSRNNCoupledSimulator(ASTSimulator):
             self.config_filepaths.append(path)
             self.configs.append(self.import_config(self.config_filepaths[i]))
 
-        # Create gym environments (device)
+        # Create gym environments
         self.envs = []
         for i in range(len(self.configs)):
             # Only create plot for first environment
@@ -38,17 +38,7 @@ class DSRNNCoupledSimulator(ASTSimulator):
                 ax = self.create_render_axis()
             else:
                 ax = None
-            # Create env on device
-            device = torch.device("cuda" if self.configs[i].training.cuda else "cpu")
-            env = make_vec_envs(env_name=self.configs[i].env.env_name,
-                                seed=self.configs[i].env.seed,
-                                num_processes=1,
-						        gamma=self.configs[i].reward.gamma,
-                                log_dir=None, 
-                                device=device,
-                                allow_early_resets=True,
-						        config=self.configs[0],
-                                ax=ax)
+            env = self.make_env(self.configs[i], ax)
             self.envs.append(env)
 
         # Load each DSRNN model
@@ -132,82 +122,66 @@ class DSRNNCoupledSimulator(ASTSimulator):
             self.eval_masks.append(eval_masks)
 
 
+    def generate_obs_tensor(self, obs):
+        obs['robot_node'] = torch.tensor([[obs['robot_node']]],
+                                         dtype=torch.float32,
+                                         device='cuda')
+        obs['temporal_edges'] = torch.tensor([[obs['temporal_edges']]],
+                                        dtype=torch.float32,
+                                        device='cuda')   
+        obs['spatial_edges'] = torch.tensor([obs['spatial_edges']],
+                                        dtype=torch.float32,
+                                        device='cuda')
+        return obs
+
+
     def reset(self):
         self.observations = []
 
         # Reset simulation environments and observations
-        for env in self.envs:
-            obs = env.reset()
-            self.observations.append(obs)
+        for i in range(len(self.envs)):
+            obs = self.envs[i].reset()
+            self.observations.append(self.generate_obs_tensor(obs))
 
         # Reset hidden states
         self.init_hidden_states()
 
+        # Reset done variable for each env
+        self.dones = [False for i in range(len(self.models))]
+
 
     def step(self):
         for i in range(len(self.models)):
+            device = torch.device("cuda" if self.configs[i].training.cuda else "cpu")
+
             # Compute action for each robot policy
             with torch.no_grad():
                 _, action, _, eval_recurrent_hidden_states = self.models[i].act(
-                    self.obs_test,
+                    self.observations[i],
                     self.eval_recurrent_hidden_states[i],
                     self.eval_masks[i],
                     deterministic=True)
             
-            # Step simulation forward
-            #obs, rew, done, infos = self.envs[i].step(action)
-            obs, rew, done, infos = self.envs_test.step(action)
+            #obs, rew, done, infos = self.envs[i].step(action.cpu().numpy()[0])
+            obs, rew, done, infos = self.envs[i].ast_step(action.cpu().numpy()[0], 'DIRECT_ACTION')
 
+            # Update masks
+            if done:
+                self.eval_masks[i] = torch.tensor(
+                    [[0.0]],
+                    dtype=torch.float32,
+                    device=device)
+            else:
+                self.eval_masks[i] = torch.tensor(
+                    [[1.0]],
+                    dtype=torch.float32,
+                    device=device)
+            
             # Update observation
-            self.observations[i] = copy.copy(obs)
+            self.observations[i] = copy.copy(self.generate_obs_tensor(obs))
 
             # Update hidden state
             self.eval_recurrent_hidden_states[i] = copy.copy(eval_recurrent_hidden_states)
 
-
-
-# env_name = 'CrowdSimDict-v0'
-# env = gym.make(env_name)
-# config = 'data/example_model/configs/config.py'
-
-# model_dir_string = 'data.example_model.configs.config'
-# model_arguments = import_module(model_dir_string)
-# Config = getattr(model_arguments, 'Config')
-# config = Config()
-
-
-# env.configure(config)
-# env.render()
-
-
-# model_dir_string = 'data.example_model.configs.config'
-# model_arguments = import_module(model_dir_string)
-# Config = getattr(model_arguments, 'Config')
-# config = Config()
-
-# fig, ax = plt.subplots(figsize=(7, 7))
-# ax.set_xlim(-6, 6)
-# ax.set_ylim(-6, 6)
-# ax.set_xlabel('x(m)', fontsize=16)
-# ax.set_ylabel('y(m)', fontsize=16)
-# plt.ion()
-# plt.show()
-
-# test_env = make_env(config, ax)
-# print(test_env)
-# print(test_env.robot.vy)
-# test_env.reset()
-# print(test_env.robot.vy)
-
-# for i in range(100):
-#     test_env.render()
-
-# eval_dir = 'data'
-# torch.set_num_threads(1)
-# device = torch.device("cuda" if config.training.cuda else "cpu")
-
-# envs = make_vec_envs(env_name, config.env.seed, 1,
-#                      config.reward.gamma, eval_dir, device, allow_early_resets=True,
-#                      config=config, ax=ax, test_case=-1)
-
-# print(envs)
+            # Update done indicator
+            self.dones[i] = copy.copy(done)

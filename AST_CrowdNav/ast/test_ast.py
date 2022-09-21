@@ -5,7 +5,9 @@ if __name__ == '__main__':
     config_name = ['config', 'config']
     model_names = ['34400.pt', '34400.pt']
     sim = DSRNNCoupledSimulator(model_dirs, config_name, model_names)
-
+    # for i in range(100):
+    #     sim.reset()
+    #     sim.render()
 
     counter = 0
     while True:
@@ -15,5 +17,5 @@ if __name__ == '__main__':
         else:
             sim.reset()
             counter += 1
-            if counter >= 3:
+            if counter >= 10:
                 break

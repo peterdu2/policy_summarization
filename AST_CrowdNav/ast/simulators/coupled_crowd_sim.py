@@ -7,9 +7,11 @@ import sys
 import crowd_sim
 import gym
 import numpy as np
+import random
 import torch
 
 from ast_toolbox.simulators import ASTSimulator
+from crowd_sim.envs.utils.human import Human
 from importlib import import_module
 from matplotlib import pyplot as plt
 from pytorchBaselines.a2c_ppo_acktr.envs import make_vec_envs
@@ -140,8 +142,33 @@ class DSRNNCoupledSimulator(ASTSimulator):
 
         # Reset simulation environments and observations
         for i in range(len(self.envs)):
-            obs = self.envs[i].reset()
+            # Reset general simulator params
+            self.envs[i].desiredVelocity = [0.0, 0.0]
+            self.envs[i].humans = []
+            self.envs[i].global_time = 0
+
+            # Reset robot
+            robot = self.envs[i].robot
+            robot_config = self.configs[i].robot
+            robot.set(robot_config.init_pos[0], robot_config.init_pos[1],
+                      robot_config.goal[0], robot_config.goal[1],
+                      0., 0., np.pi/2)
+
+            # Reset humans
+            human_config = self.configs[i].humans
+            for j in range(self.configs[i].sim.human_num):
+                human = Human(self.configs[i], 'humans')
+                human.set(human_config.init_pos[j][0],
+                          human_config.init_pos[j][1],
+                          0., 0., 0., 0., 0.)
+                self.envs[i].humans.append(copy.copy(human))
+            
+            # Generate observation
+            obs = self.envs[i].generate_ob(reset=True)
             self.observations.append(self.generate_obs_tensor(obs))
+
+            # Reset potential
+            self.envs[i].potential = -abs(np.linalg.norm(np.array([robot.px, robot.py]) - np.array([robot.gx, robot.gy])))
 
         # Reset hidden states
         self.init_hidden_states()
@@ -151,6 +178,9 @@ class DSRNNCoupledSimulator(ASTSimulator):
 
 
     def step(self):
+
+        new_accels = [[random.uniform(-0.5, 0.5), random.uniform(-0.5, 0.5)] for i in range(10)]
+
         for i in range(len(self.models)):
             device = torch.device("cuda" if self.configs[i].training.cuda else "cpu")
 
@@ -163,7 +193,7 @@ class DSRNNCoupledSimulator(ASTSimulator):
                     deterministic=True)
             
             #obs, rew, done, infos = self.envs[i].step(action.cpu().numpy()[0])
-            obs, rew, done, infos = self.envs[i].ast_step(action.cpu().numpy()[0], 'DIRECT_ACTION')
+            obs, rew, done, infos = self.envs[i].ast_step(action.cpu().numpy()[0], 'DIRECT_ACTION', new_accels)
 
             # Update masks
             if done:
@@ -185,3 +215,6 @@ class DSRNNCoupledSimulator(ASTSimulator):
 
             # Update done indicator
             self.dones[i] = copy.copy(done)
+
+            print('Simulator', i, ' ', self.envs[i].robot.get_observable_state())
+        print(' ')

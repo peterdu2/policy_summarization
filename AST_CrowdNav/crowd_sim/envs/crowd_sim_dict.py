@@ -4,6 +4,7 @@ from numpy.linalg import norm
 import copy
 from crowd_sim.envs.utils.action import ActionRot, ActionXY
 from crowd_sim.envs import CrowdSim
+import random
 
 # The class for the simulation environment used for training a DSRNN policy
 
@@ -163,67 +164,50 @@ class CrowdSimDict(CrowdSim):
         return ob, reward, done, info
 
 
-    def ast_step(self, action, mode, env_action=None):
-        """
-        Compute actions for all agents, detect collision, update environment and return (ob, reward, done, info)
-        """
-
+    def ast_step(self, robot_action, mode, env_action=None):
         assert mode == 'OBSERVATION_NOISE' or mode == 'DIRECT_ACTION', \
             'Invalid mode: ' + mode + '; Supported modes are OBSERVATION_NOISE, DIRECT_ACTION'
 
-        action = self.robot.policy.clip_action(action, self.robot.v_pref)
-
-        if self.robot.kinematics == 'unicycle':
-            self.desiredVelocity[0] = np.clip(self.desiredVelocity[0]+action.v,-self.robot.v_pref,self.robot.v_pref)
-            action=ActionRot(self.desiredVelocity[0], action.r)
+        robot_action = self.robot.policy.clip_action(robot_action, self.robot.v_pref)
 
         if mode == 'DIRECT_ACTION':
             #new_accel = np.reshape(env_action, (len(self.humans), 2))
-            #sampl = np.random.uniform(low=0.5, high=13.3, size=(50,))
-            new_accels = [np.random.uniform(low=0.5, high=13.3, size=(50,)) for i in range(len(self.humans))]
+            new_accels = env_action
 
             # Update each pedestrians velocity with provided acceleration
             for i in range(len(self.humans)):
-                # Calculate new velocities using acceleration action
+                # Calculate new velocities using accelerations from env_action
                 vx = self.humans[i].vx + new_accels[i][0]*self.humans[i].time_step
                 vy = self.humans[i].vy + new_accels[i][1]*self.humans[i].time_step
+                # Limit velocity of human
                 if vx > self.humans[i].v_pref:
                     vx = self.humans[i].v_pref
                 if vy > self.humans[i].v_pref:
                     vy = self.humans[i].v_pref
                 
-                # Get human action and step human
+                # Create human action and step human
                 human_action = ActionXY(vx, vy)
                 self.humans[i].step(human_action)
 
             # Compute reward and episode info
-            reward, done, episode_info = self.calc_reward(action)
+            reward, done, episode_info = self.calc_reward(robot_action)
 
             # Step robot
-            self.robot.step(action)
+            self.robot.step(robot_action)
 
         elif mode == 'OBSERVATION_NOISE':
+            #TODO
             pass
 
 
-        human_actions = self.get_human_actions()
+        # human_actions = self.get_human_actions()
 
-        # compute reward and episode info
-        # reward, done, episode_info = self.calc_reward(action)
-
-
-        # apply action and update all agents
-        # self.robot.step(action)
-        # for i, human_action in enumerate(human_actions):
-        #     self.humans[i].step(human_action)
         self.global_time += self.time_step # max episode length=time_limit/time_step
-
 
         # compute the observation
         ob = self.generate_ob(reset=False)
 
         info={'info':episode_info}
-
 
         # Update all humans' goals randomly midway through episode
         if self.random_goal_changing:

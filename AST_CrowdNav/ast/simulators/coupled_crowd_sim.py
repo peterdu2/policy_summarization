@@ -20,9 +20,13 @@ from pytorchBaselines.a2c_ppo_acktr.model import Policy
 
 class DSRNNCoupledSimulator(ASTSimulator):
 
-    def __init__(self, model_dirs, config_names, model_names):
+    def __init__(self, model_dirs, config_names, model_names, s_0=None, **kwargs):
         assert len(model_dirs) == 2, 'Provide two models for simulator'
         assert len(config_names) == 2, 'Provide two models for simulator'
+
+        # AST Parameters
+        self.s_0 = s_0
+        self.goal = False
 
         # Load each config object
         self.config_filepaths = []
@@ -65,8 +69,11 @@ class DSRNNCoupledSimulator(ASTSimulator):
 
             self.models.append(actor_critic)
 
+        # Initialize the base simulator
+        super().__init__(**kwargs)
+
         # Reset simulation and initialize hidden states
-        self.reset()
+        self.reset(self.s_0)
 
     
     def import_config(self, config_filepath):
@@ -137,7 +144,9 @@ class DSRNNCoupledSimulator(ASTSimulator):
         return obs
 
 
-    def reset(self):
+    def reset(self, s_0):
+        super(DSRNNCoupledSimulator, self).reset(s_0)
+
         self.observations = []
 
         # Reset simulation environments and observations
@@ -176,9 +185,15 @@ class DSRNNCoupledSimulator(ASTSimulator):
         # Reset done variable for each env
         self.dones = [False for i in range(len(self.models))]
 
+        # Reset AST Class items
+        self.observation = copy.copy(self.observations)
+        self.goal = False
+
+        return self.observation_return()
+
+
 
     def step(self):
-
         new_accels = [[random.uniform(-0.5, 0.5), random.uniform(-0.5, 0.5)] for i in range(10)]
 
         for i in range(len(self.models)):
@@ -218,3 +233,43 @@ class DSRNNCoupledSimulator(ASTSimulator):
 
             print('Simulator', i, ' ', self.envs[i].robot.get_observable_state())
         print(' ')
+
+
+    def closed_loop_step(self, action):
+        for i in range(len(self.models)):
+            device = torch.device("cuda" if self.configs[i].training.cuda else "cpu")
+
+            # Compute action for each robot policy
+            with torch.no_grad():
+                _, robot_action, _, eval_recurrent_hidden_states = self.models[i].act(
+                    self.observations[i],
+                    self.eval_recurrent_hidden_states[i],
+                    self.eval_masks[i],
+                    deterministic=True)
+            
+            #obs, rew, done, infos = self.envs[i].step(action.cpu().numpy()[0])
+            obs, rew, done, infos = self.envs[i].ast_step(robot_action.cpu().numpy()[0], 'DIRECT_ACTION', action)
+
+            # Update masks
+            if done:
+                self.eval_masks[i] = torch.tensor(
+                    [[0.0]],
+                    dtype=torch.float32,
+                    device=device)
+            else:
+                self.eval_masks[i] = torch.tensor(
+                    [[1.0]],
+                    dtype=torch.float32,
+                    device=device)
+            
+            # Update observation
+            self.observations[i] = copy.copy(self.generate_obs_tensor(obs))
+
+            # Update hidden state
+            self.eval_recurrent_hidden_states[i] = copy.copy(eval_recurrent_hidden_states)
+
+            # Update done indicator
+            self.dones[i] = copy.copy(done)
+
+        self.observation = copy.copy(self.observations)
+        return self.observation_return() 

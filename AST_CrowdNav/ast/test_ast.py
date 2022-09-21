@@ -1,4 +1,5 @@
 from simulators.coupled_crowd_sim import DSRNNCoupledSimulator
+import random
 
 if __name__ == '__main__':
     model_dirs = ['data/policy_summarization_10_humans/', 'data/policy_summarization_10_humans/']
@@ -12,10 +13,11 @@ if __name__ == '__main__':
     counter = 0
     while True:
         if not True in sim.dones:
-            sim.step()
+            new_accels = [[random.uniform(-0.5, 0.5), random.uniform(-0.5, 0.5)] for i in range(10)]
+            sim.closed_loop_step(new_accels)
             sim.render()
         else:
-            sim.reset()
+            sim.reset(None)
             counter += 1
             if counter >= 10:
                 break

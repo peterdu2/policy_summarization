@@ -91,7 +91,6 @@ class DSRNNCoupledSimulator(ASTSimulator):
         super().__init__(**kwargs)
 
         # Reset simulation and initialize hidden states
-        print(self.s_0)
         self.reset(self.s_0)
 
     
@@ -257,7 +256,6 @@ class DSRNNCoupledSimulator(ASTSimulator):
     def is_goal(self):
         for state in self.sim_infos:
             if isinstance(state['info'], Collision):
-                print('Collision')
                 return True
         return False
         

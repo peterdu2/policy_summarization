@@ -8,7 +8,7 @@ class Config(object):
     # environment settings
     env = BaseConfig()
     env.env_name = 'CrowdSimDict-v0'  # name of the environment
-    env.time_limit = 25 # time limit of each episode (second)
+    env.time_limit = 50 # time limit of each episode (second)
     env.time_step = 0.25 # length of each timestep/control frequency (second)
     env.val_size = 100
     env.test_size = 500 # number of episodes for test.py

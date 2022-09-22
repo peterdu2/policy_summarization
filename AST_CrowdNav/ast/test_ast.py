@@ -1,11 +1,12 @@
 from simulators.dsrnn_coupled_simulator import DSRNNCoupledSimulator
+from spaces.dsrnn_spaces import DSRNNSpaces
 from rewards.dsrnn_reward import DSRNNReward
 import random
 
 if __name__ == '__main__':
     model_dirs = ['data/policy_summarization_10_humans/', 'data/policy_summarization_10_humans/']
     config_name = ['config', 'config']
-    model_names = ['00400.pt', '34400.pt']
+    model_names = ['34400.pt', '34400.pt']
 
     s_0 = []
     s_0.append([-5., -4., 7., 2.])
@@ -20,19 +21,42 @@ if __name__ == '__main__':
     s_0.append([4.92327303238429, 2.5992114112982367])
     s_0.append([-2.5587340425394998, 5.7638743741024])
 
-    sim = DSRNNCoupledSimulator(model_dirs, config_name, model_names, s_0, max_path_length=500)
-    sim.blackbox_sim_state= False
-    sim.open_loop = False
+    mode = 'OBSERVATION_NOISE'
 
-    reward = DSRNNReward()
+    sim = DSRNNCoupledSimulator(model_dirs=model_dirs,
+                                config_names=config_name,
+                                model_names=model_names,
+                                s_0=s_0,
+                                mode=mode,
+                                max_path_length=100,
+                                blackbox_sim_state=False,
+                                open_loop=False)
+
+    reward = DSRNNReward(num_humans=10,
+                         use_heuristic=True)
+
+    spaces = DSRNNSpaces(num_humans=10,
+                         x_accel_low=-0.5,
+                         x_accel_high=0.5,
+                         y_accel_low=-0.5,
+                         y_accel_high=0.5,
+                         x_noise_low=-0.25,
+                         x_noise_high=0.25,
+                         y_noise_low=-0.25,
+                         y_noise_high=0.25,
+                         mode=mode)
 
     counter = 0
     while True:
-        if not True in sim.dones:
+        if not sim.is_terminal() and not sim.is_goal():
             env_action = [[random.uniform(-0.5, 0.5), random.uniform(-0.5, 0.5)] for i in range(10)]
-            obs = sim.step(env_action)
+
+            test_env_action = spaces.action_space.sample()
+            obs = sim.step(test_env_action)
+
             r_info = sim.get_reward_info()
             r = reward.give_reward(env_action, info=r_info)
+
             sim.render()
         else:
             sim.reset(s_0)

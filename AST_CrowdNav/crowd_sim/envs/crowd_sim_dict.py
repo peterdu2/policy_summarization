@@ -171,8 +171,8 @@ class CrowdSimDict(CrowdSim):
         robot_action = self.robot.policy.clip_action(robot_action, self.robot.v_pref)
 
         if mode == 'DIRECT_ACTION':
-            # env_action = [[human_0_accel], [human_1_accel], ...]
-            #              [human_x_accel] = [x_accel, y_accel]
+            # Compute reward and episode info
+            reward, done, episode_info = self.calc_reward(robot_action)
 
             # Update each pedestrians velocity with provided acceleration
             for i in range(len(self.humans)):
@@ -190,16 +190,20 @@ class CrowdSimDict(CrowdSim):
                 human_action = ActionXY(vx, vy)
                 self.humans[i].step(human_action)
 
-            # Compute reward and episode info
-            reward, done, episode_info = self.calc_reward(robot_action)
-
             # Step robot
             self.robot.step(robot_action)
 
         elif mode == 'OBSERVATION_NOISE':
-            #TODO
+            # Compute reward and episode info
+            reward, done, episode_info = self.calc_reward(robot_action)
+
+            # Humans follow collision avoidance policy 
             human_actions = self.get_human_actions()
-            pass
+            
+            # Step robot and humans
+            self.robot.step(robot_action)
+            for i, human_action in enumerate(human_actions):
+                self.humans[i].step(human_action)
 
         self.global_time += self.time_step # max episode length=time_limit/time_step
 

@@ -21,13 +21,14 @@ from pytorchBaselines.a2c_ppo_acktr.model import Policy
 
 class DSRNNCoupledSimulator(ASTSimulator):
 
-    def __init__(self, model_dirs, config_names, model_names, s_0, **kwargs):
+    def __init__(self, model_dirs, config_names, model_names, s_0, mode, **kwargs):
         assert len(model_dirs) == 2, 'Provide two models for simulator'
         assert len(config_names) == 2, 'Provide two models for simulator'
 
         # AST Parameters
         self.s_0 = s_0
         self.goal = False
+        self.mode = mode
 
         # Configs
         self.config_filepaths = []
@@ -171,7 +172,7 @@ class DSRNNCoupledSimulator(ASTSimulator):
 
         self.observations = []
         self.robot_actions = []
-        self.sim_infos = []
+        self.sim_infos = [{'info': Nothing()} for i in range(len(self.envs))]
 
         # Reset simulation environments and observations
         for i in range(len(self.envs)):
@@ -194,13 +195,11 @@ class DSRNNCoupledSimulator(ASTSimulator):
             
             # Generate observation
             obs = self.envs[i].generate_ob(reset=True)
-            self.observations.append(self.generate_obs_tensor(obs))
+            self.observations.append(obs)
             # Reset potential
             self.envs[i].potential = -abs(np.linalg.norm(np.array([robot.px, robot.py]) - np.array([robot.gx, robot.gy])))
             # Reset robot action log
             self.robot_actions.append([0., 0.,])
-            # Reset simulator info list
-            self.sim_infos.append(None)
 
         # Reset hidden states
         self.init_hidden_states()
@@ -216,15 +215,24 @@ class DSRNNCoupledSimulator(ASTSimulator):
 
 
     def closed_loop_step(self, action):
+        # Reshape env_action to following format:
+        # env_action = [[human_0_action], [human_0_action], ...]
+        #              where [human_x_action] = [x_action, y_action]
+        action = action.reshape(len(self.envs[0].humans), 2)
+
         for i in range(len(self.models)):
+            if self.mode == 'OBSERVATION_NOISE':
+                # Add noise to each sptial edge in observation
+                self.observations[i]['spatial_edges'] = self.observations[i]['spatial_edges'] + action
+
             # Compute action for each robot policy
             with torch.no_grad():
                 _, robot_action, _, eval_recurrent_hidden_states = self.models[i].act(
-                    self.observations[i],
+                    self.generate_obs_tensor(self.observations[i]),
                     self.eval_recurrent_hidden_states[i],
                     self.eval_masks[i],
                     deterministic=True)
-            obs, rew, done, infos = self.envs[i].ast_step(robot_action.cpu().numpy()[0], 'DIRECT_ACTION', action)
+            obs, rew, done, infos = self.envs[i].ast_step(robot_action.cpu().numpy()[0], self.mode, action)
 
             # Update masks
             if done:
@@ -239,7 +247,7 @@ class DSRNNCoupledSimulator(ASTSimulator):
                     device=self.device_flags[i])
             
             # Update observation
-            self.observations[i] = copy.copy(self.generate_obs_tensor(obs))
+            self.observations[i] = copy.copy(obs)
             # Update hidden state
             self.eval_recurrent_hidden_states[i] = copy.copy(eval_recurrent_hidden_states)
             # Update done indicator

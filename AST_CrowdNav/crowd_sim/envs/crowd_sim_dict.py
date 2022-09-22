@@ -171,14 +171,15 @@ class CrowdSimDict(CrowdSim):
         robot_action = self.robot.policy.clip_action(robot_action, self.robot.v_pref)
 
         if mode == 'DIRECT_ACTION':
-            #new_accel = np.reshape(env_action, (len(self.humans), 2))
-            new_accels = env_action
+            # env_action = [[human_0_accel], [human_1_accel], ...]
+            #              [human_x_accel] = [x_accel, y_accel]
 
             # Update each pedestrians velocity with provided acceleration
             for i in range(len(self.humans)):
                 # Calculate new velocities using accelerations from env_action
-                vx = self.humans[i].vx + new_accels[i][0]*self.humans[i].time_step
-                vy = self.humans[i].vy + new_accels[i][1]*self.humans[i].time_step
+                vx = self.humans[i].vx + env_action[i][0]*self.humans[i].time_step
+                vy = self.humans[i].vy + env_action[i][1]*self.humans[i].time_step
+
                 # Limit velocity of human
                 if vx > self.humans[i].v_pref:
                     vx = self.humans[i].v_pref
@@ -197,10 +198,8 @@ class CrowdSimDict(CrowdSim):
 
         elif mode == 'OBSERVATION_NOISE':
             #TODO
+            human_actions = self.get_human_actions()
             pass
-
-
-        # human_actions = self.get_human_actions()
 
         self.global_time += self.time_step # max episode length=time_limit/time_step
 
@@ -219,7 +218,6 @@ class CrowdSimDict(CrowdSim):
             for human in self.humans:
                 if norm((human.gx - human.px, human.gy - human.py)) < human.radius:
                     self.update_human_goal(human)
-
 
         return ob, reward, done, info
 

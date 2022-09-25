@@ -23,22 +23,15 @@ class DSRNNReward(ASTReward):
 
         if (is_goal):  # At least one of the robots has crashed
             reward = 1000. + self.get_robot_separation(robot_positions)
-            #print('[AST REWARD] Collision detected')
-            #print(robot_positions)
-            #print('Robot separation', reward)
         elif (is_terminal):
-            #print('[AST REWARD] AST terminal condition')
             if self.use_heuristic:
                 heuristic_reward = self.get_robot_separation(robot_positions)
             else:
                 heuristic_reward = 0
             reward = -100000 - 10000 * heuristic_reward 
         else:
-            #print('[AST REWARD] Regular step')
             action_separation = np.linalg.norm(robot_actions[0] - robot_actions[1])
             reward = action_separation
-            #print(robot_actions)
-            #print('Action separation', action_separation)
 
         return reward
 

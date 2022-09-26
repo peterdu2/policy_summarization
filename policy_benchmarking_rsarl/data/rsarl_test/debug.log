@@ -1,0 +1,72 @@
+2022-04-18 14:24:17 | [mcts]  
+---------  ---------
+StepNum    100
+reward 0    10.2999
+reward 1     7.7934
+reward 10    0
+reward 11    0
+reward 12    0
+reward 13    0
+reward 14    0
+reward 15    0
+reward 16    0
+reward 17    0
+reward 18    0
+reward 19    0
+reward 2     6.42375
+reward 3     0
+reward 4     0
+reward 5     0
+reward 6     0
+reward 7     0
+reward 8     0
+reward 9     0
+---------  ---------
+2022-09-15 10:48:57 | [mcts]  
+---------  ---------
+StepNum    100
+reward 0   103.027
+reward 1     7.99417
+reward 10    0
+reward 11    0
+reward 12    0
+reward 13    0
+reward 14    0
+reward 15    0
+reward 16    0
+reward 17    0
+reward 18    0
+reward 19    0
+reward 2     6.96126
+reward 3     6.39204
+reward 4     0
+reward 5     0
+reward 6     0
+reward 7     0
+reward 8     0
+reward 9     0
+---------  ---------
+2022-09-15 10:53:26 | [mcts]  
+---------  ---------
+StepNum    100
+reward 0     7.74307
+reward 1     7.70943
+reward 10    0
+reward 11    0
+reward 12    0
+reward 13    0
+reward 14    0
+reward 15    0
+reward 16    0
+reward 17    0
+reward 18    0
+reward 19    0
+reward 2     3.9725
+reward 3     0
+reward 4     0
+reward 5     0
+reward 6     0
+reward 7     0
+reward 8     0
+reward 9     0
+---------  ---------

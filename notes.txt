@@ -3,3 +3,6 @@ Todos:
     - locations of runner (need to be at root of ast folder)
     - location of data folder with dsrnn model (needs relative path from ast batch runner)
       temporarily copied data folder to ast folder
+
+    - add to python path for runner to find crowd sim packages:
+      export PYTHONPATH=$PYTHONPATH:/home/peterdu2/policy_summarization/AST_CrowdNav

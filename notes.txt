@@ -6,3 +6,16 @@ Todos:
 
     - add to python path for runner to find crowd sim packages:
       export PYTHONPATH=$PYTHONPATH:/home/peterdu2/policy_summarization/AST_CrowdNav
+
+
+MCTS Iteration info:
+DPWParams:
+  d = max search depth (ie max_path_length)
+  gamma = discount factor
+  ec = exporation bonus
+  k = The constraint parameter used in DPW: |N(s,a)|<=kN(s)^alpha.
+  alpha = The constraint parameter used in DPW: |N(s,a)|<=kN(s)^alpha.
+
+  n = maximum number of iterations
+    = 2 * max(n_itr * log_interval // max_path_length ** 2, 1)
+  n_iter, log_interval, and max_path_length provided by algo args in runner.py

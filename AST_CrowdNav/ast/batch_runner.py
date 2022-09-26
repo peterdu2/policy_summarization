@@ -5,7 +5,7 @@ import ast
 from runner import runner as mcts_runner
 
 # Simulator args
-model_dir_path = 'data/policy_summarization_10_humans/'
+model_dir_path = 'dsrnn_models/policy_summarization_10_humans/'
 model_dirs = [model_dir_path, model_dir_path]
 config_names = ['config', 'config']
 model_names = ['34400.pt', '34400.pt']
@@ -37,13 +37,14 @@ s_0.append([4.213509392947646, 4.356352793759812])
 s_0.append([4.92327303238429, 2.5992114112982367])
 s_0.append([-2.5587340425394998, 5.7638743741024])
 
+# Logging args
+base_log_dir = '/home/peter/policy_summarization/AST_CrowdNav/ast/results/data'
+log_folder_name = 'ast_dsrnn_0'
+
 
 if __name__ == '__main__':
     # Which algorithms to run
     RUN_MCTS = True
-
-    # Logging settings
-    base_log_dir = '/home/peterdu2/policy_summarization/AST_CrowdNav/ast/results/data'
 
     # experiment settings
     run_experiment_args = {'snapshot_mode': 'last',
@@ -113,7 +114,7 @@ if __name__ == '__main__':
         mcts_algo_args = {'max_path_length': max_path_length,
                           'stress_test_mode': 1,
                           'ec': 100.0,
-                          'n_itr': 3000,
+                          'n_itr': 10,
                           'k': 0.5,
                           'alpha': 0.5,
                           'clear_nodes': True,
@@ -123,12 +124,11 @@ if __name__ == '__main__':
                           'log_dir': None,
                           }
 
-        mcts_bpq_args = {'N': 20}
+        mcts_bpq_args = {'N': 10}
 
         # MCTS settings
         print("base_dir: ", base_log_dir)
-        run_experiment_args['log_dir'] = base_log_dir + \
-            '/rsarl_test'
+        run_experiment_args['log_dir'] = base_log_dir + '/' + log_folder_name
         run_experiment_args['exp_name'] = 'mcts'
 
         mcts_algo_args['max_path_length'] = max_path_length

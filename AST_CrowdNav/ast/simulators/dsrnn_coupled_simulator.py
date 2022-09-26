@@ -282,4 +282,15 @@ class DSRNNCoupledSimulator(ASTSimulator):
 
     # TODO need to implement clone state to properly init ast env
     def clone_state(self):
-        return np.array([0,0,0,0]).flatten()
+        # Observation format (dictionary of lists): 
+        # {robot_node, temporal_edges_spatial_edges}
+        # robot_node = [px, py, radius, gx. gy, vpref, theta] 
+        # spatial_edges = [[v0], [v1], ... [v_num_humans]] where
+        #                 each v is vector pointing from robot pos to human pos
+        cloned_state = []
+        for i in range(len(self.models)):
+            cloned_state.extend(self.observation[i]['robot_node'])
+            cloned_state.extend(self.observation[i]['temporal_edges'])
+            cloned_state.extend(self.observation[i]['spatial_edges'].flatten())
+
+        return np.array(cloned_state)

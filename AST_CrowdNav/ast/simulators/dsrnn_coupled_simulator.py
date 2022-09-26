@@ -279,3 +279,7 @@ class DSRNNCoupledSimulator(ASTSimulator):
             'sim_infos': self.sim_infos,
             'robot_actions': self.robot_actions,
             'robot_positions': robot_positions}
+
+    # TODO need to implement clone state to properly init ast env
+    def clone_state(self):
+        return np.array([0,0,0,0]).flatten()

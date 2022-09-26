@@ -5,11 +5,22 @@ import ast
 from runner import runner as mcts_runner
 
 # Simulator args
-model_dir_path = '/home/peterdu2/policy_summarization/AST_CrowdNav/data/policy_summarization_10_humans/'
+model_dir_path = 'data/policy_summarization_10_humans/'
 model_dirs = [model_dir_path, model_dir_path]
 config_names = ['config', 'config']
 model_names = ['34400.pt', '34400.pt']
 mode = 'DIRECT_ACTION'
+
+# Spaces args
+num_humans = 10
+x_accel_low=-0.5
+x_accel_high=0.5
+y_accel_low=-0.5
+y_accel_high=0.5
+x_noise_low=-0.25
+x_noise_high=0.25
+y_noise_low=-0.25
+y_noise_high=0.25
 
 # Env args
 max_path_length = 100
@@ -77,7 +88,18 @@ if __name__ == '__main__':
     reward_args = {}
 
     # spaces settings
-    spaces_args = {}
+    spaces_args = {# DSRNN reward args
+                   'num_humans': num_humans,
+                   'mode': mode,
+                   'x_accel_low': x_accel_low,
+                   'x_accel_high': x_accel_high,
+                   'y_accel_low': y_accel_low,
+                   'y_accel_high': y_accel_high,
+                   'x_noise_low': x_noise_low,
+                   'x_noise_high': x_noise_high,
+                   'y_noise_low': y_noise_low,
+                   'y_noise_high': y_noise_high
+                   }
 
 
     # MCTS ----------------------------------------------------------------------------------

@@ -22,6 +22,7 @@ if __name__ == '__main__':
     s_0.append([-2.5587340425394998, 5.7638743741024])
 
     mode = 'OBSERVATION_NOISE'
+    mode = 'DIRECT_ACTION'
 
     sim = DSRNNCoupledSimulator(model_dirs=model_dirs,
                                 config_names=config_name,

@@ -183,8 +183,12 @@ class CrowdSimDict(CrowdSim):
                 # Limit velocity of human
                 if vx > self.humans[i].v_pref:
                     vx = self.humans[i].v_pref
+                elif vx < -self.humans[i].v_pref:
+                    vx = -self.humans[i].v_pref
                 if vy > self.humans[i].v_pref:
                     vy = self.humans[i].v_pref
+                elif vy < -self.humans[i].v_pref:
+                    vy = -self.humans[i].v_pref
                 
                 # Create human action and step human
                 human_action = ActionXY(vx, vy)

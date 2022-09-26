@@ -8,12 +8,12 @@ class Config(object):
     # environment settings
     env = BaseConfig()
     env.env_name = 'CrowdSimDict-v0'  # name of the environment
-    env.time_limit = 50 # time limit of each episode (second)
+    env.time_limit = 100 # time limit of each episode (second)
     env.time_step = 0.25 # length of each timestep/control frequency (second)
     env.val_size = 100
     env.test_size = 500 # number of episodes for test.py
     env.randomize_attributes = False # randomize the preferred velocity and radius of humans or not
-    env.seed = 0  # random seed for environment
+    env.seed = 200  # random seed for environment
 
     # reward function
     reward = BaseConfig()
@@ -40,7 +40,7 @@ class Config(object):
     # policy to control the humans: orca or social_force
     humans.policy = "orca"
     humans.radius = 0.3 # radius of each human
-    humans.v_pref = 0.35 # max velocity of each human
+    humans.v_pref = 0.3 # max velocity of each human
     # FOV = this values * PI
     humans.FOV = 2.
 

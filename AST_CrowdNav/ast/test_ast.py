@@ -4,7 +4,7 @@ from rewards.dsrnn_reward import DSRNNReward
 import random
 
 if __name__ == '__main__':
-    model_dirs = ['data/policy_summarization_10_humans/', 'data/policy_summarization_10_humans/']
+    model_dirs = ['dsrnn_models/policy_summarization_10_humans/', 'dsrnn_models/policy_summarization_10_humans/']
     config_name = ['config', 'config']
     model_names = ['34400.pt', '34400.pt']
 

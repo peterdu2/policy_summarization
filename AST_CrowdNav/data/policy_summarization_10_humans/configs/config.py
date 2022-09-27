@@ -40,7 +40,7 @@ class Config(object):
     # policy to control the humans: orca or social_force
     humans.policy = "orca"
     humans.radius = 0.3 # radius of each human
-    humans.v_pref = 0.3 # max velocity of each human
+    humans.v_pref = 0.15 # max velocity of each human
     # FOV = this values * PI
     humans.FOV = 2.
 

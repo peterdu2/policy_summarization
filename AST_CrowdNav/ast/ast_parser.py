@@ -5,7 +5,8 @@ from simulators.dsrnn_coupled_simulator import DSRNNCoupledSimulator
 
 model_dirs = ['dsrnn_models/policy_summarization_10_humans/', 'dsrnn_models/policy_summarization_10_humans/']
 config_name = ['config', 'config']
-model_names = ['34400.pt', '34400.pt']
+model_names = ['30800.pt', '14000.pt']
+model_names = ['14000.pt', '30800.pt']
 
 s_0 = []
 s_0.append([-5., -4., 7., 2.])
@@ -34,7 +35,7 @@ if __name__ == '__main__':
                                 blackbox_sim_state=False,
                                 open_loop=False)
                                 
-    result_path = 'results/data/ast_dsrnn_test/top_actions.pkl'
+    result_path = 'results/data/ast_dsrnn_0/top_actions.pkl'
     ast_results = pickle.load(open(result_path, 'rb'))
     i = 0
     for (action_seq, reward_predict) in ast_results:

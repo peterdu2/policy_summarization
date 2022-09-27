@@ -40,7 +40,7 @@ class Config(object):
     # policy to control the humans: orca or social_force
     humans.policy = "orca"
     humans.radius = 0.3 # radius of each human
-    humans.v_pref = 0.3 # max velocity of each human
+    humans.v_pref = 0.15 # max velocity of each human
     # FOV = this values * PI
     humans.FOV = 2.
 
@@ -146,19 +146,3 @@ class Config(object):
     training.load_path = 'data/policy_summarization/checkpoints/34800.pt'  # if resume = True, load from the following checkpoint
     training.overwrite = True  # whether to overwrite the output directory in training
     training.num_threads = 1  # number of threads used for intraop parallelism on CPU
-
-    # # AST specific settings
-    # robot.init_px = -5.
-    # robot.init_py = -4.
-    # robot.init_pos = [-5., -4.]
-    # robot.goal = [7., 7.]
-    # humans.init_pos = [[0.9764521104695284, 5.673416349134316],
-    #                    [-0.3916318531059858, -6.311028515571641],
-    #                    [6.16749983681399, -1.8436072010801905],
-    #                    [6.382823965553917, 0.9261922797511946],
-    #                    [-1.7508964915665364, -6.244077560533835],
-    #                    [3.8364308394984743, -4.473900760196651],
-    #                    [5.561697860813725, 0.13723735189354574],
-    #                    [4.213509392947646, 4.356352793759812],
-    #                    [4.92327303238429, 2.5992114112982367],
-    #                    [-2.5587340425394998, 5.7638743741024]]

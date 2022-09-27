@@ -280,7 +280,7 @@ class DSRNNCoupledSimulator(ASTSimulator):
             'robot_actions': self.robot_actions,
             'robot_positions': robot_positions}
 
-    # TODO need to implement clone state to properly init ast env
+
     def clone_state(self):
         # Observation format (dictionary of lists): 
         # {robot_node, temporal_edges_spatial_edges}

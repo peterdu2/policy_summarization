@@ -1,6 +1,8 @@
 import pickle
 import argparse
 import configparser
+import shutil
+
 import ast
 from runner import runner as mcts_runner
 
@@ -8,22 +10,22 @@ from runner import runner as mcts_runner
 model_dir_path = 'dsrnn_models/policy_summarization_10_humans/'
 model_dirs = [model_dir_path, model_dir_path]
 config_names = ['config', 'config']
-model_names = ['34400.pt', '34400.pt']
+model_names = ['30800.pt', '20600.pt']
 mode = 'DIRECT_ACTION'
 
 # Spaces args
 num_humans = 10
-x_accel_low=-0.5
-x_accel_high=0.5
-y_accel_low=-0.5
-y_accel_high=0.5
+x_accel_low=-0.25
+x_accel_high=0.25
+y_accel_low=-0.25
+y_accel_high=0.25
 x_noise_low=-0.25
 x_noise_high=0.25
 y_noise_low=-0.25
 y_noise_high=0.25
 
 # Env args
-max_path_length = 50
+max_path_length = 100
 s_0 = []
 s_0.append([-5., -4., 7., 2.])
 s_0.append([0.9764521104695284, 5.673416349134316])
@@ -38,8 +40,10 @@ s_0.append([4.92327303238429, 2.5992114112982367])
 s_0.append([-2.5587340425394998, 5.7638743741024])
 
 # Logging args
-base_log_dir = '/home/peterdu2/policy_summarization/AST_CrowdNav/ast/results/data'
-log_folder_name = 'ast_dsrnn_test'
+base_log_dir = '/home/peter/policy_summarization/AST_CrowdNav/ast/results/data'
+log_folder_name = 'ast_dsrnn_0'
+batch_runner_path = '/home/peter/policy_summarization/AST_CrowdNav/ast/batch_runner.py'
+sim_config_path = model_dir_path + 'configs/config.py'
 
 
 if __name__ == '__main__':
@@ -114,7 +118,7 @@ if __name__ == '__main__':
         mcts_algo_args = {'max_path_length': max_path_length,
                           'stress_test_mode': 1,
                           'ec': 100.0,
-                          'n_itr': 20,
+                          'n_itr': 10000,
                           'k': 0.5,
                           'alpha': 0.5,
                           'clear_nodes': True,
@@ -124,7 +128,7 @@ if __name__ == '__main__':
                           'log_dir': None,
                           }
 
-        mcts_bpq_args = {'N': 10}
+        mcts_bpq_args = {'N': 30}
 
         # MCTS settings
         print("base_dir: ", base_log_dir)
@@ -148,3 +152,9 @@ if __name__ == '__main__':
             sampler_args=mcts_sampler_args,
             save_expert_trajectory=False,
         )
+
+    # Copy batch runner script to logging directory
+    shutil.copy2(batch_runner_path, base_log_dir + '/' + log_folder_name)
+
+    # Copy sim config to logging directory
+    shutil.copy2(sim_config_path, base_log_dir + '/' + log_folder_name)

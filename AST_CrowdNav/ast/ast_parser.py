@@ -1,5 +1,6 @@
 import numpy as np
 import pickle
+import time
 
 from simulators.dsrnn_coupled_simulator import DSRNNCoupledSimulator
 
@@ -7,6 +8,8 @@ model_dirs = ['dsrnn_models/policy_summarization_10_humans/', 'dsrnn_models/poli
 config_name = ['config', 'config']
 model_names = ['30800.pt', '14000.pt']
 model_names = ['14000.pt', '30800.pt']
+model_names = ['14000.pt', '20600.pt']
+#model_names = ['20600.pt', '14000.pt']
 
 s_0 = []
 s_0.append([-5., -4., 7., 2.])
@@ -35,19 +38,31 @@ if __name__ == '__main__':
                                 blackbox_sim_state=False,
                                 open_loop=False)
                                 
-    result_path = 'results/data/ast_dsrnn_0/top_actions.pkl'
+    result_path = 'results/data/ast_dsrnn_1/top_actions.pkl'
     ast_results = pickle.load(open(result_path, 'rb'))
+
+    # result_path = 'results/data/ast_dsrnn_1/best_actions.p'
+    # ast_results = pickle.load(open(result_path, 'rb'))
+
+    # test = ast_results[0]
+
+    # for act in test:
+    #     sim.step(act)
+    #     print(sim.sim_infos)
+    #     sim.render()
+
     i = 0
     for (action_seq, reward_predict) in ast_results:
         print('EXPECTED REWARD:', reward_predict)
         print(' ')
         sim.reset(s_0=s_0)
         sim.render()
+        time.sleep(1000)
         for action in action_seq:
             sim.step(action.action)
             print(sim.sim_infos)
             sim.render()
-        # print(i)
-        # print(' ')
-        # i += 1
+        print(i)
+        print(' ')
+        i += 1
         #print(action_seq, reward_predict)

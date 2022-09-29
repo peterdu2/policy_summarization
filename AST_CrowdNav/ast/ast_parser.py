@@ -2,15 +2,12 @@ import numpy as np
 import pickle
 import time
 
+from crowd_sim.envs.utils.info import *
+
 from simulators.dsrnn_coupled_simulator import DSRNNCoupledSimulator
 
 model_dirs = ['dsrnn_models/policy_summarization_10_humans/', 'dsrnn_models/policy_summarization_10_humans/']
 config_name = ['config', 'config']
-model_names = ['30800.pt', '14000.pt']
-model_names = ['14000.pt', '30800.pt']
-model_names = ['14000.pt', '20600.pt']
-model_names = ['20600.pt', '14000.pt']
-model_names = ['30800.pt', '20600.pt']
 model_names = ['20600.pt', '30800.pt']
 
 s_0 = []
@@ -29,6 +26,8 @@ s_0.append([-2.5587340425394998, 5.7638743741024])
 mode = 'OBSERVATION_NOISE'
 mode = 'DIRECT_ACTION'
 
+log_folder_name = 'ast_dsrnn_0'
+
 if __name__ == '__main__':
 
     sim = DSRNNCoupledSimulator(model_dirs=model_dirs,
@@ -40,7 +39,7 @@ if __name__ == '__main__':
                                 blackbox_sim_state=False,
                                 open_loop=False)
                                 
-    result_path = 'results/data/ast_dsrnn_0/top_actions.pkl'
+    result_path = 'results/data/' + log_folder_name + '/top_actions.pkl'
     ast_results = pickle.load(open(result_path, 'rb'))
 
     # result_path = 'results/data/ast_dsrnn_1/best_actions.p'
@@ -55,16 +54,24 @@ if __name__ == '__main__':
 
     i = 0
     for (action_seq, reward_predict) in ast_results:
-        if i >= 1:
+        if i == 2:
+            print('Trajectory ID:', i)
             print('EXPECTED REWARD:', reward_predict)
-            print(' ')
             sim.reset(s_0=s_0)
             sim.render()
+
+            done_traj = False
             for action in action_seq:
                 sim.step(action.action)
-                print(sim.sim_infos)
+                #print(sim.sim_infos)
                 sim.render()
-        print(i)
+                for state in sim.sim_infos:
+                    if isinstance(state['info'], ReachGoal):
+                        done_traj = True
+                        break
+                if done_traj:
+                    break
+        
+        print('Trajectory ended with states:', sim.sim_infos)
         print(' ')
         i += 1
-        #print(action_seq, reward_predict)

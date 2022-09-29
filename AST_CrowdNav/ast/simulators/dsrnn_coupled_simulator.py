@@ -61,13 +61,11 @@ class DSRNNCoupledSimulator(ASTSimulator):
 
         # Create gym environments
         for i in range(len(self.configs)):
-            # Only create plot for first environment
-            if i == 0:
-                ax = self.create_render_axis()
-            else:
-                ax = None
-            env = self.make_env(self.configs[i], ax)
+            env = self.make_env(self.configs[i], None)
             self.envs.append(env)
+
+        # Create render axes
+        self.axes = self.create_render_axis()
 
         # Load each DSRNN model
         for i in range(len(model_dirs)):
@@ -103,12 +101,16 @@ class DSRNNCoupledSimulator(ASTSimulator):
 
 
     def create_render_axis(self):
-        fig, ax = plt.subplots(figsize=(7, 7))
-        ax.set_xlim(-10, 10)
-        ax.set_ylim(-10, 10)
-        ax.set_xlabel('x(m)', fontsize=16)
-        ax.set_ylabel('y(m)', fontsize=16)
-        return ax
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 7))
+        ax1.set_xlim(-10, 10)
+        ax1.set_ylim(-10, 10)
+        ax1.set_xlabel('x(m)', fontsize=16)
+        ax1.set_ylabel('y(m)', fontsize=16)
+        ax2.set_xlim(-10, 10)
+        ax2.set_ylim(-10, 10)
+        ax2.set_xlabel('x(m)', fontsize=16)
+        ax2.set_ylabel('y(m)', fontsize=16)
+        return ax1, ax2
 
 
     def make_env(self, config, ax):
@@ -119,10 +121,6 @@ class DSRNNCoupledSimulator(ASTSimulator):
         env.render_axis = ax
         env.nenv = 1
         return env
-
-
-    def render(self):
-        self.envs[0].render()
 
 
     def init_hidden_states(self):
@@ -294,3 +292,119 @@ class DSRNNCoupledSimulator(ASTSimulator):
             cloned_state.extend(self.observation[i]['spatial_edges'].flatten())
 
         return np.array(cloned_state)
+
+
+    def render(self):
+        import matplotlib.pyplot as plt
+        import matplotlib.lines as mlines
+        from matplotlib import patches
+
+        plt.rcParams['animation.ffmpeg_path'] = '/usr/bin/ffmpeg'
+
+        robot_color = 'yellow'
+        goal_color = 'red'
+        arrow_color = 'red'
+        arrow_style = patches.ArrowStyle("->", head_length=4, head_width=2)
+
+        def calcFOVLineEndPoint(ang, point, extendFactor):
+            # choose the extendFactor big enough
+            # so that the endPoints of the FOVLine is out of xlim and ylim of the figure
+            FOVLineRot = np.array([[np.cos(ang), -np.sin(ang), 0],
+                                   [np.sin(ang), np.cos(ang), 0],
+                                   [0, 0, 1]])
+            point.extend([1])
+            # apply rotation matrix
+            newPoint = np.matmul(FOVLineRot, np.reshape(point, [3, 1]))
+            # increase the distance between the line start point and the end point
+            newPoint = [extendFactor * newPoint[0, 0], extendFactor * newPoint[1, 0], 1]
+            return newPoint
+
+
+        artists=[]
+        for cur_axis in range(2):
+            ax=self.axes[cur_axis]
+
+            # add goal
+            goal=mlines.Line2D([self.envs[cur_axis].robot.gx], [self.envs[cur_axis].robot.gy], color=goal_color, marker='*', linestyle='None', markersize=15, label='Goal')
+            ax.add_artist(goal)
+            artists.append(goal)
+
+            # add robot
+            robotX,robotY=self.envs[cur_axis].robot.get_position()
+
+            robot=plt.Circle((robotX,robotY), self.envs[cur_axis].robot.radius, fill=True, color=robot_color)
+            ax.add_artist(robot)
+            artists.append(robot)
+
+            plt.legend([robot, goal], ['Robot', 'Goal'], fontsize=16)
+
+            # compute orientation in each step and add arrow to show the direction
+            radius = self.envs[cur_axis].robot.radius
+            arrowStartEnd=[]
+
+            robot_theta = self.envs[cur_axis].robot.theta if self.envs[cur_axis].robot.kinematics == 'unicycle' else np.arctan2(self.envs[cur_axis].robot.vy, self.envs[cur_axis].robot.vx)
+
+            arrowStartEnd.append(((robotX, robotY), (robotX + radius * np.cos(robot_theta), robotY + radius * np.sin(robot_theta))))
+
+            for i, human in enumerate(self.envs[cur_axis].humans):
+                theta = np.arctan2(human.vy, human.vx)
+                arrowStartEnd.append(((human.px, human.py), (human.px + radius * np.cos(theta), human.py + radius * np.sin(theta))))
+
+            arrows = [patches.FancyArrowPatch(*arrow, color=arrow_color, arrowstyle=arrow_style)
+                    for arrow in arrowStartEnd]
+            for arrow in arrows:
+                ax.add_artist(arrow)
+                artists.append(arrow)
+
+
+            # draw FOV for the robot
+            # add robot FOV
+            if self.envs[cur_axis].robot_fov < np.pi * 2:
+                FOVAng = self.envs[0].robot_fov / 2
+                FOVLine1 = mlines.Line2D([0, 0], [0, 0], linestyle='--')
+                FOVLine2 = mlines.Line2D([0, 0], [0, 0], linestyle='--')
+
+
+                startPointX = robotX
+                startPointY = robotY
+                endPointX = robotX + radius * np.cos(robot_theta)
+                endPointY = robotY + radius * np.sin(robot_theta)
+
+                # transform the vector back to world frame origin, apply rotation matrix, and get end point of FOVLine
+                # the start point of the FOVLine is the center of the robot
+                FOVEndPoint1 = calcFOVLineEndPoint(FOVAng, [endPointX - startPointX, endPointY - startPointY], 20. / self.envs[cur_axis].robot.radius)
+                FOVLine1.set_xdata(np.array([startPointX, startPointX + FOVEndPoint1[0]]))
+                FOVLine1.set_ydata(np.array([startPointY, startPointY + FOVEndPoint1[1]]))
+                FOVEndPoint2 = calcFOVLineEndPoint(-FOVAng, [endPointX - startPointX, endPointY - startPointY], 20. / self.envs[cur_axis].robot.radius)
+                FOVLine2.set_xdata(np.array([startPointX, startPointX + FOVEndPoint2[0]]))
+                FOVLine2.set_ydata(np.array([startPointY, startPointY + FOVEndPoint2[1]]))
+
+                ax.add_artist(FOVLine1)
+                ax.add_artist(FOVLine2)
+                artists.append(FOVLine1)
+                artists.append(FOVLine2)
+
+            # add humans and change the color of them based on visibility
+            human_circles = [plt.Circle(human.get_position(), human.radius, fill=False) for human in self.envs[cur_axis].humans]
+
+
+            for i in range(len(self.envs[cur_axis].humans)):
+                ax.add_artist(human_circles[i])
+                artists.append(human_circles[i])
+
+                # green: visible; red: invisible
+                if self.envs[cur_axis].detect_visible(self.envs[cur_axis].robot, self.envs[cur_axis].humans[i], robot1=True):
+                    human_circles[i].set_color(c='g')
+                else:
+                    human_circles[i].set_color(c='r')
+                #plt.text(self.humans[i].px - 0.1, self.humans[i].py - 0.1, str(i), color='black', fontsize=12)
+                ax.text(self.envs[cur_axis].humans[i].px - 0.1, self.envs[cur_axis].humans[i].py - 0.1, str(i), color='black', fontsize=12)
+
+
+        plt.pause(0.02)
+        for item in artists:
+            item.remove() # there should be a better way to do this. For example,
+            # initially use add_artist and draw_artist later on
+        for ax in self.axes:
+            for t in ax.texts:
+                t.set_visible(False)

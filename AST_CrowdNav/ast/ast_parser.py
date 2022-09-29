@@ -1,4 +1,5 @@
 import numpy as np
+import os
 import pickle
 import time
 
@@ -27,6 +28,7 @@ mode = 'OBSERVATION_NOISE'
 mode = 'DIRECT_ACTION'
 
 log_folder_name = 'ast_dsrnn_0'
+render_path = '/home/peter/policy_summarization/AST_CrowdNav/ast/results/data/' + log_folder_name + '/renders'
 
 if __name__ == '__main__':
 
@@ -54,23 +56,28 @@ if __name__ == '__main__':
 
     i = 0
     for (action_seq, reward_predict) in ast_results:
-        if i == 2:
-            print('Trajectory ID:', i)
-            print('EXPECTED REWARD:', reward_predict)
-            sim.reset(s_0=s_0)
-            sim.render()
+        print('Trajectory ID:', i)
+        print('EXPECTED REWARD:', reward_predict)
 
-            done_traj = False
-            for action in action_seq:
-                sim.step(action.action)
-                #print(sim.sim_infos)
-                sim.render()
-                for state in sim.sim_infos:
-                    if isinstance(state['info'], ReachGoal):
-                        done_traj = True
-                        break
-                if done_traj:
+        # Create the path to store renderings
+        save_render_path = render_path + '/' + format(i, '03d')
+        if not os.path.exists(save_render_path):
+            os.makedirs(save_render_path)
+
+        sim.reset(s_0=s_0)
+        sim.render(save_render=False, render_path=save_render_path)
+
+        done_traj = False
+        for action in action_seq:
+            sim.step(action.action)
+            #print(sim.sim_infos)
+            sim.render()
+            for state in sim.sim_infos:
+                if isinstance(state['info'], ReachGoal):
+                    done_traj = True
                     break
+            if done_traj:
+                break
         
         print('Trajectory ended with states:', sim.sim_infos)
         print(' ')

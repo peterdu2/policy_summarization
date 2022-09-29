@@ -34,6 +34,10 @@ class DSRNNCoupledSimulator(ASTSimulator):
         self.config_filepaths = []
         self.configs = []
         self.device_flags = []
+        self.config_names = config_names
+
+        # Rendering
+        self.render_frame = 0
 
         # Enviornments
         self.envs = []
@@ -45,6 +49,7 @@ class DSRNNCoupledSimulator(ASTSimulator):
         self.models = []
         self.eval_recurrent_hidden_states = []
         self.eval_masks = []
+        self.model_names = model_names
 
         # Reward info
         self.robot_actions = []
@@ -209,6 +214,9 @@ class DSRNNCoupledSimulator(ASTSimulator):
         self.observation = copy.copy(self.observations)
         self.goal = False
 
+        # Reset rendering frame (used for saving frames)
+        self.render_frame = 0
+
         return self.observation_return()
 
 
@@ -294,7 +302,7 @@ class DSRNNCoupledSimulator(ASTSimulator):
         return np.array(cloned_state)
 
 
-    def render(self):
+    def render(self, save_render, render_path):
         import matplotlib.pyplot as plt
         import matplotlib.lines as mlines
         from matplotlib import patches
@@ -323,6 +331,7 @@ class DSRNNCoupledSimulator(ASTSimulator):
         artists=[]
         for cur_axis in range(2):
             ax=self.axes[cur_axis]
+            ax.set_title(self.model_names[cur_axis])
 
             # add goal
             goal=mlines.Line2D([self.envs[cur_axis].robot.gx], [self.envs[cur_axis].robot.gy], color=goal_color, marker='*', linestyle='None', markersize=15, label='Goal')
@@ -400,6 +409,8 @@ class DSRNNCoupledSimulator(ASTSimulator):
                 #plt.text(self.humans[i].px - 0.1, self.humans[i].py - 0.1, str(i), color='black', fontsize=12)
                 ax.text(self.envs[cur_axis].humans[i].px - 0.1, self.envs[cur_axis].humans[i].py - 0.1, str(i), color='black', fontsize=12)
 
+        if save_render:
+            plt.savefig(render_path+'/'+format(self.render_frame, '04d')+'.png')
 
         plt.pause(0.02)
         for item in artists:
@@ -408,3 +419,5 @@ class DSRNNCoupledSimulator(ASTSimulator):
         for ax in self.axes:
             for t in ax.texts:
                 t.set_visible(False)
+
+        self.render_frame += 1

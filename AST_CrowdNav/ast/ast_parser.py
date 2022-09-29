@@ -9,25 +9,25 @@ from simulators.dsrnn_coupled_simulator import DSRNNCoupledSimulator
 
 model_dirs = ['dsrnn_models/policy_summarization_10_humans/', 'dsrnn_models/policy_summarization_10_humans/']
 config_name = ['config', 'config']
-model_names = ['20600.pt', '30800.pt']
+model_names = ['20600.pt', '13200.pt']
 
 s_0 = []
 s_0.append([-5., -4., 7., 2.])
 s_0.append([0.9764521104695284, 5.673416349134316])
 s_0.append([-0.3916318531059858, -6.311028515571641])
 s_0.append([6.16749983681399, -1.8436072010801905])
-s_0.append([6.382823965553917, 0.9261922797511946])
-s_0.append([-1.7508964915665364, -6.244077560533835])
-s_0.append([3.8364308394984743, -4.473900760196651])
+s_0.append([2.382823965553917, 0.9261922797511946])
+s_0.append([-1.7508964915665364, -4.244077560533835])
+s_0.append([1.8364308394984743, -4.473900760196651])
 s_0.append([5.561697860813725, 0.13723735189354574])
 s_0.append([4.213509392947646, 4.356352793759812])
 s_0.append([4.92327303238429, 2.5992114112982367])
-s_0.append([-2.5587340425394998, 5.7638743741024])
+s_0.append([-2.5587340425394998, 1.7638743741024])
 
 mode = 'OBSERVATION_NOISE'
 mode = 'DIRECT_ACTION'
 
-log_folder_name = 'ast_dsrnn_0'
+log_folder_name = 'ast_dsrnn_2'
 render_path = '/home/peter/policy_summarization/AST_CrowdNav/ast/results/data/' + log_folder_name + '/renders'
 
 if __name__ == '__main__':
@@ -65,13 +65,13 @@ if __name__ == '__main__':
             os.makedirs(save_render_path)
 
         sim.reset(s_0=s_0)
-        sim.render(save_render=False, render_path=save_render_path)
+        sim.render(save_render=True, render_path=save_render_path)
 
         done_traj = False
         for action in action_seq:
             sim.step(action.action)
             #print(sim.sim_infos)
-            sim.render()
+            sim.render(save_render=True, render_path=save_render_path)
             for state in sim.sim_infos:
                 if isinstance(state['info'], ReachGoal):
                     done_traj = True

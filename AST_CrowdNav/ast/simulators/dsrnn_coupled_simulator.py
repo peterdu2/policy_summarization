@@ -193,7 +193,8 @@ class DSRNNCoupledSimulator(ASTSimulator):
             for j in range(self.configs[i].sim.human_num):
                 human = Human(self.configs[i], 'humans')
                 human.set(px=s_0[j+1][0], py=s_0[j+1][1],
-                          gx=0. ,gy=0., vx=0., vy=0., theta=0.)
+                          gx=-s_0[j+1][0] ,gy=-s_0[j+1][1],
+                          vx=0., vy=0., theta=0.)
                 self.envs[i].humans.append(copy.copy(human))
             
             # Generate observation

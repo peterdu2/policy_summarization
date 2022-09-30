@@ -20,15 +20,15 @@ s_0.append([2.382823965553917, 0.9261922797511946])
 s_0.append([-1.7508964915665364, -4.244077560533835])
 s_0.append([1.8364308394984743, -4.473900760196651])
 s_0.append([5.561697860813725, 0.13723735189354574])
-s_0.append([4.213509392947646, 4.356352793759812])
-s_0.append([4.92327303238429, 2.5992114112982367])
+s_0.append([4.213509392947646, 6.356352793759812])
+s_0.append([4.92327303238429, 1.5992114112982367])
 s_0.append([-2.5587340425394998, 1.7638743741024])
 
 mode = 'OBSERVATION_NOISE'
 mode = 'DIRECT_ACTION'
 
-log_folder_name = 'ast_dsrnn_2'
-render_path = '/home/peterdu2/policy_summarization/AST_CrowdNav/ast/results/data/' + log_folder_name + '/renders'
+log_folder_name = 'ast_dsrnn_4'
+render_path = '/home/peter/policy_summarization/AST_CrowdNav/ast/results/data/' + log_folder_name + '/renders'
 
 if __name__ == '__main__':
 

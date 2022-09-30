@@ -10,7 +10,7 @@ from runner import runner as mcts_runner
 model_dir_path = 'dsrnn_models/policy_summarization_10_humans/'
 model_dirs = [model_dir_path, model_dir_path]
 config_names = ['config', 'config']
-model_names = ['14000.pt', '20600.pt']
+model_names = ['20600.pt', '30800.pt']
 mode = 'DIRECT_ACTION'
 
 # Spaces args
@@ -40,9 +40,9 @@ s_0.append([4.92327303238429, 2.5992114112982367])
 s_0.append([-2.5587340425394998, 1.7638743741024])
 
 # Logging args
-base_log_dir = '/home/peterdu2/policy_summarization/AST_CrowdNav/ast/results/data'
-log_folder_name = 'ast_dsrnn_1'
-batch_runner_path = '/home/peterdu2/policy_summarization/AST_CrowdNav/ast/batch_runner.py'
+base_log_dir = '/home/peter/policy_summarization/AST_CrowdNav/ast/results/data'
+log_folder_name = 'ast_dsrnn_3'
+batch_runner_path = '/home/peter/policy_summarization/AST_CrowdNav/ast/batch_runner.py'
 sim_config_path = model_dir_path + 'configs/config.py'
 
 

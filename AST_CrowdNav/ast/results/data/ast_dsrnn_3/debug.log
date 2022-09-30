@@ -1,0 +1,102 @@
+2022-09-30 12:08:29 | [mcts]  
+---------  ----------
+StepNum      1000
+reward 0      328.313
+reward 1   -99496.5
+reward 10       0
+reward 11       0
+reward 12       0
+reward 13       0
+reward 14       0
+reward 15       0
+reward 16       0
+reward 17       0
+reward 18       0
+reward 19       0
+reward 2   -99515.2
+reward 20       0
+reward 21       0
+reward 22       0
+reward 23       0
+reward 24       0
+reward 25       0
+reward 26       0
+reward 27       0
+reward 28       0
+reward 29       0
+reward 3   -99525.4
+reward 4   -99541.7
+reward 5   -99544
+reward 6   -99548.6
+reward 7   -99551.3
+reward 8   -99563.5
+reward 9   -99564.6
+---------  ----------
+2022-09-30 12:08:39 | [mcts]  
+---------  ----------
+StepNum      2000
+reward 0      510.627
+reward 1      328.313
+reward 10  -99541.7
+reward 11  -99544
+reward 12  -99548.6
+reward 13  -99549.5
+reward 14  -99551.3
+reward 15  -99563.5
+reward 16  -99564.6
+reward 17  -99568.1
+reward 18  -99572.4
+reward 19  -99572.7
+reward 2   -99496.5
+reward 20       0
+reward 21       0
+reward 22       0
+reward 23       0
+reward 24       0
+reward 25       0
+reward 26       0
+reward 27       0
+reward 28       0
+reward 29       0
+reward 3   -99515.2
+reward 4   -99515.8
+reward 5   -99525.4
+reward 6   -99527.7
+reward 7   -99534.6
+reward 8   -99537.6
+reward 9   -99541.4
+---------  ----------
+2022-09-30 12:08:50 | [mcts]  
+---------  ----------
+StepNum      3000
+reward 0      510.627
+reward 1      426.104
+reward 10  -99525
+reward 11  -99525.4
+reward 12  -99527.7
+reward 13  -99528.2
+reward 14  -99530.3
+reward 15  -99534.6
+reward 16  -99537.6
+reward 17  -99539.8
+reward 18  -99541.4
+reward 19  -99541.7
+reward 2      366.726
+reward 20  -99544
+reward 21  -99548.6
+reward 22  -99549.5
+reward 23  -99551.3
+reward 24  -99554.4
+reward 25  -99563.5
+reward 26  -99564.6
+reward 27  -99568.1
+reward 28  -99572.4
+reward 29  -99572.7
+reward 3      360.534
+reward 4      349.154
+reward 5      328.313
+reward 6   -99496.5
+reward 7   -99514.6
+reward 8   -99515.2
+reward 9   -99515.8
+---------  ----------

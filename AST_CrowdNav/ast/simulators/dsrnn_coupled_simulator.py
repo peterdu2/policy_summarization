@@ -303,7 +303,7 @@ class DSRNNCoupledSimulator(ASTSimulator):
         return np.array(cloned_state)
 
 
-    def render(self, save_render, render_path):
+    def render(self, save_render, render_path, pause=0.05):
         import matplotlib.pyplot as plt
         import matplotlib.lines as mlines
         from matplotlib import patches
@@ -413,7 +413,9 @@ class DSRNNCoupledSimulator(ASTSimulator):
         if save_render:
             plt.savefig(render_path+'/'+format(self.render_frame, '04d')+'.png')
 
-        plt.pause(0.02)
+        if pause > 0:
+            plt.pause(pause)
+
         for item in artists:
             item.remove() # there should be a better way to do this. For example,
             # initially use add_artist and draw_artist later on

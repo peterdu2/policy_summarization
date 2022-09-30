@@ -9,7 +9,7 @@ from simulators.dsrnn_coupled_simulator import DSRNNCoupledSimulator
 
 model_dirs = ['dsrnn_models/policy_summarization_10_humans/', 'dsrnn_models/policy_summarization_10_humans/']
 config_name = ['config', 'config']
-model_names = ['20600.pt', '13200.pt']
+model_names = ['13200.pt', '20600.pt']
 
 s_0 = []
 s_0.append([-5., -4., 7., 2.])
@@ -28,7 +28,7 @@ mode = 'OBSERVATION_NOISE'
 mode = 'DIRECT_ACTION'
 
 log_folder_name = 'ast_dsrnn_2'
-render_path = '/home/peter/policy_summarization/AST_CrowdNav/ast/results/data/' + log_folder_name + '/renders'
+render_path = '/home/peterdu2/policy_summarization/AST_CrowdNav/ast/results/data/' + log_folder_name + '/renders'
 
 if __name__ == '__main__':
 
@@ -44,16 +44,6 @@ if __name__ == '__main__':
     result_path = 'results/data/' + log_folder_name + '/top_actions.pkl'
     ast_results = pickle.load(open(result_path, 'rb'))
 
-    # result_path = 'results/data/ast_dsrnn_1/best_actions.p'
-    # ast_results = pickle.load(open(result_path, 'rb'))
-
-    # test = ast_results[0]
-
-    # for act in test:
-    #     sim.step(act)
-    #     print(sim.sim_infos)
-    #     sim.render()
-
     i = 0
     for (action_seq, reward_predict) in ast_results:
         print('Trajectory ID:', i)
@@ -65,13 +55,13 @@ if __name__ == '__main__':
             os.makedirs(save_render_path)
 
         sim.reset(s_0=s_0)
-        sim.render(save_render=True, render_path=save_render_path)
+        sim.render(save_render=True, render_path=save_render_path, pause=0.)
 
         done_traj = False
         for action in action_seq:
             sim.step(action.action)
             #print(sim.sim_infos)
-            sim.render(save_render=True, render_path=save_render_path)
+            sim.render(save_render=True, render_path=save_render_path, pause=0.)
             for state in sim.sim_infos:
                 if isinstance(state['info'], ReachGoal):
                     done_traj = True

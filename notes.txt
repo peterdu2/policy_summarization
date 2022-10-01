@@ -28,4 +28,4 @@ Selected policies:
 13200.pt: episode mean reward: 9.81915886
 14000.pt: episode mean reward: 10.07230044
 20600.pt: episode mean reward: 16.52406858
-30900.pt: episode mean reward: 21.312590890000003
+30800.pt: episode mean reward: 20.23076747

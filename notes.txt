@@ -29,3 +29,30 @@ Selected policies:
 14000.pt: episode mean reward: 10.07230044
 20600.pt: episode mean reward: 16.52406858
 30800.pt: episode mean reward: 20.23076747
+
+
+Results:
+
+dsrnn0 ['30800.pt', '20600.pt']:
+  - Original circular human position
+
+dsrnn1 ['14000.pt', '20600.pt']:
+  - Updated (less circular) human initial positions
+
+dsrnn2 ['13200.pt', '20600.pt']:
+  - Updated (less circular) human initial positions
+  - Probably will discard this model (will not use 13200.pt)
+
+dsrnn3 ['20600.pt', '30800.pt']:
+  - Updated (less circular) human initial positions
+  - Rerun of dsrnn0 but with updated human initial positions 
+
+dsrnn4 ['20600.pt', '30800.pt']:
+  - Slightly changed human positions (humans 7 and 8 are more spread out)
+  - Reduce bouncing behaviour near the goal caused by humans 7 and 8
+
+
+Target set:
+  dsrnn1  ['14000.pt', '20600.pt']
+  dsrnn3  ['20600.pt', '30800.pt']
+  dsrnn5  ['14000.pt', '30800.pt']

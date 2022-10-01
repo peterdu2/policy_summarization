@@ -1,0 +1,102 @@
+2022-10-01 15:16:40 | [mcts]  
+---------  ----------
+StepNum      1000
+reward 0      178.524
+reward 1   -99439.8
+reward 10       0
+reward 11       0
+reward 12       0
+reward 13       0
+reward 14       0
+reward 15       0
+reward 16       0
+reward 17       0
+reward 18       0
+reward 19       0
+reward 2   -99704
+reward 20       0
+reward 21       0
+reward 22       0
+reward 23       0
+reward 24       0
+reward 25       0
+reward 26       0
+reward 27       0
+reward 28       0
+reward 29       0
+reward 3   -99750.3
+reward 4   -99782.3
+reward 5   -99787.5
+reward 6   -99821
+reward 7   -99826.7
+reward 8   -99856.9
+reward 9   -99867.7
+---------  ----------
+2022-10-01 15:16:52 | [mcts]  
+---------  ----------
+StepNum      2000
+reward 0      178.524
+reward 1   -99439.8
+reward 10  -99787.5
+reward 11  -99787.6
+reward 12  -99787.7
+reward 13  -99820.2
+reward 14  -99821
+reward 15  -99826.7
+reward 16  -99842.6
+reward 17  -99856.9
+reward 18  -99867.7
+reward 19  -99871.6
+reward 2   -99704
+reward 20       0
+reward 21       0
+reward 22       0
+reward 23       0
+reward 24       0
+reward 25       0
+reward 26       0
+reward 27       0
+reward 28       0
+reward 29       0
+reward 3   -99706.6
+reward 4   -99714.8
+reward 5   -99746.1
+reward 6   -99750.3
+reward 7   -99762.7
+reward 8   -99782.3
+reward 9   -99785.1
+---------  ----------
+2022-10-01 15:17:02 | [mcts]  
+---------  ----------
+StepNum      3000
+reward 0      178.524
+reward 1      163.588
+reward 10  -99750.3
+reward 11  -99762.7
+reward 12  -99764.2
+reward 13  -99772.8
+reward 14  -99780.9
+reward 15  -99782.3
+reward 16  -99785.1
+reward 17  -99787.5
+reward 18  -99787.6
+reward 19  -99787.7
+reward 2   -99439.8
+reward 20  -99806.3
+reward 21  -99806.6
+reward 22  -99807.6
+reward 23  -99820.2
+reward 24  -99821
+reward 25  -99826.7
+reward 26  -99829
+reward 27  -99842.6
+reward 28  -99856.9
+reward 29  -99867.7
+reward 3   -99682.5
+reward 4   -99700.5
+reward 5   -99704
+reward 6   -99706.6
+reward 7   -99714.8
+reward 8   -99746.1
+reward 9   -99750.3
+---------  ----------

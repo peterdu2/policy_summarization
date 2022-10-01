@@ -53,6 +53,12 @@ dsrnn4 ['20600.pt', '30800.pt']:
 
 
 Target set:
+  Human position set 1:
   dsrnn1  ['14000.pt', '20600.pt']
   dsrnn3  ['20600.pt', '30800.pt']
   dsrnn5  ['14000.pt', '30800.pt']
+
+  Human position set 2:
+  dsrnn6  ['14000.pt', '20600.pt']
+  dsrnn7  ['20600.pt', '30800.pt']
+  dsrnn8  ['14000.pt', '30800.pt']

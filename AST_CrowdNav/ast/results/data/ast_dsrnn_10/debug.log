@@ -1,0 +1,374 @@
+2022-10-02 18:43:06 | [mcts]  
+---------  ----------
+StepNum      1000
+reward 0      348.529
+reward 1      158.675
+reward 10  -99677.9
+reward 11       0
+reward 12       0
+reward 13       0
+reward 14       0
+reward 15       0
+reward 16       0
+reward 17       0
+reward 18       0
+reward 19       0
+reward 2   -99594.7
+reward 20       0
+reward 21       0
+reward 22       0
+reward 23       0
+reward 24       0
+reward 25       0
+reward 26       0
+reward 27       0
+reward 28       0
+reward 29       0
+reward 3   -99603
+reward 4   -99616.1
+reward 5   -99618.9
+reward 6   -99628.7
+reward 7   -99642.8
+reward 8   -99655.2
+reward 9   -99657.2
+---------  ----------
+2022-10-02 18:43:17 | [mcts]  
+---------  ----------
+StepNum      2000
+reward 0      348.529
+reward 1      158.675
+reward 10  -99612.9
+reward 11  -99616.1
+reward 12  -99618.9
+reward 13  -99623.7
+reward 14  -99628.7
+reward 15  -99629.6
+reward 16  -99635.1
+reward 17  -99642.8
+reward 18  -99655.2
+reward 19  -99657.2
+reward 2   -99580.5
+reward 20  -99677.9
+reward 21       0
+reward 22       0
+reward 23       0
+reward 24       0
+reward 25       0
+reward 26       0
+reward 27       0
+reward 28       0
+reward 29       0
+reward 3   -99594.7
+reward 4   -99595.1
+reward 5   -99596.3
+reward 6   -99600.5
+reward 7   -99602.1
+reward 8   -99603
+reward 9   -99612.5
+---------  ----------
+2022-10-02 18:43:27 | [mcts]  
+---------  ----------
+StepNum      3000
+reward 0      348.529
+reward 1      166.572
+reward 10  -99596.3
+reward 11  -99600.5
+reward 12  -99602.1
+reward 13  -99603
+reward 14  -99612.5
+reward 15  -99612.9
+reward 16  -99616.1
+reward 17  -99618.9
+reward 18  -99620
+reward 19  -99623.7
+reward 2      162.904
+reward 20  -99625.8
+reward 21  -99628.7
+reward 22  -99629.2
+reward 23  -99629.6
+reward 24  -99630
+reward 25  -99634.2
+reward 26  -99635.1
+reward 27  -99640.5
+reward 28  -99642.8
+reward 29  -99648
+reward 3      161.204
+reward 4      160.722
+reward 5      158.675
+reward 6      157.418
+reward 7   -99580.5
+reward 8   -99594.7
+reward 9   -99595.1
+---------  ----------
+2022-10-02 18:43:37 | [mcts]  
+---------  ----------
+StepNum      4000
+reward 0      348.529
+reward 1      242.63
+reward 10  -99584.5
+reward 11  -99594.7
+reward 12  -99595.1
+reward 13  -99596.3
+reward 14  -99600.5
+reward 15  -99602.1
+reward 16  -99603
+reward 17  -99612.5
+reward 18  -99612.7
+reward 19  -99612.9
+reward 2      166.572
+reward 20  -99616.1
+reward 21  -99618.9
+reward 22  -99620
+reward 23  -99621
+reward 24  -99623.7
+reward 25  -99625.8
+reward 26  -99628.7
+reward 27  -99629.2
+reward 28  -99629.6
+reward 29  -99630
+reward 3      163.859
+reward 4      162.904
+reward 5      161.204
+reward 6      160.722
+reward 7      158.675
+reward 8      157.418
+reward 9   -99580.5
+---------  ----------
+2022-10-02 18:43:47 | [mcts]  
+---------  ----------
+StepNum      5000
+reward 0      382.888
+reward 1      367.183
+reward 10     160.519
+reward 11     158.675
+reward 12     157.418
+reward 13  -99580.5
+reward 14  -99580.5
+reward 15  -99584.5
+reward 16  -99593.2
+reward 17  -99594.7
+reward 18  -99595.1
+reward 19  -99596.3
+reward 2      348.529
+reward 20  -99600.5
+reward 21  -99602.1
+reward 22  -99603
+reward 23  -99612
+reward 24  -99612.5
+reward 25  -99612.7
+reward 26  -99612.9
+reward 27  -99616.1
+reward 28  -99618.9
+reward 29  -99620
+reward 3      242.63
+reward 4      166.572
+reward 5      163.859
+reward 6      162.904
+reward 7      162.641
+reward 8      161.204
+reward 9      160.722
+---------  ----------
+2022-10-02 18:43:59 | [mcts]  
+---------  ----------
+StepNum      6000
+reward 0      382.888
+reward 1      367.183
+reward 10     160.722
+reward 11     160.519
+reward 12     158.675
+reward 13     157.418
+reward 14  -99580.5
+reward 15  -99580.5
+reward 16  -99584.5
+reward 17  -99593.2
+reward 18  -99594.7
+reward 19  -99595
+reward 2      348.529
+reward 20  -99595.1
+reward 21  -99596.3
+reward 22  -99600.5
+reward 23  -99602.1
+reward 24  -99603
+reward 25  -99612
+reward 26  -99612.5
+reward 27  -99612.7
+reward 28  -99612.9
+reward 29  -99616.1
+reward 3      242.63
+reward 4      230.901
+reward 5      166.572
+reward 6      163.859
+reward 7      162.904
+reward 8      162.641
+reward 9      161.204
+---------  ----------
+2022-10-02 18:44:11 | [mcts]  
+---------  ----------
+StepNum      7000
+reward 0      382.888
+reward 1      367.183
+reward 10     161.204
+reward 11     160.722
+reward 12     160.519
+reward 13     158.675
+reward 14     157.418
+reward 15  -99568.2
+reward 16  -99580.5
+reward 17  -99580.5
+reward 18  -99584.5
+reward 19  -99590.2
+reward 2      348.529
+reward 20  -99593.2
+reward 21  -99594.7
+reward 22  -99595
+reward 23  -99595.1
+reward 24  -99595.3
+reward 25  -99595.6
+reward 26  -99596.3
+reward 27  -99600.5
+reward 28  -99602.1
+reward 29  -99603
+reward 3      242.63
+reward 4      233.829
+reward 5      230.901
+reward 6      166.572
+reward 7      163.859
+reward 8      162.904
+reward 9      162.641
+---------  ----------
+2022-10-02 18:44:22 | [mcts]  
+---------  ----------
+StepNum      8000
+reward 0      382.888
+reward 1      367.183
+reward 10     162.867
+reward 11     162.641
+reward 12     161.204
+reward 13     160.722
+reward 14     160.519
+reward 15     160.394
+reward 16     160.304
+reward 17     160.255
+reward 18     158.675
+reward 19     157.418
+reward 2      348.529
+reward 20  -99568.2
+reward 21  -99580.5
+reward 22  -99580.5
+reward 23  -99581.7
+reward 24  -99584.5
+reward 25  -99587.9
+reward 26  -99590.2
+reward 27  -99593.2
+reward 28  -99594.7
+reward 29  -99595
+reward 3      242.63
+reward 4      233.829
+reward 5      230.901
+reward 6      166.572
+reward 7      166.086
+reward 8      163.859
+reward 9      162.904
+---------  ----------
+2022-10-02 18:44:32 | [mcts]  
+---------  ----------
+StepNum      9000
+reward 0      382.888
+reward 1      367.183
+reward 10     163.859
+reward 11     162.904
+reward 12     162.867
+reward 13     162.641
+reward 14     161.213
+reward 15     161.204
+reward 16     160.722
+reward 17     160.519
+reward 18     160.394
+reward 19     160.304
+reward 2      348.529
+reward 20     160.255
+reward 21     158.675
+reward 22     157.982
+reward 23     157.418
+reward 24  -99568.2
+reward 25  -99580.5
+reward 26  -99580.5
+reward 27  -99581.7
+reward 28  -99584.5
+reward 29  -99587.9
+reward 3      245.293
+reward 4      242.63
+reward 5      233.829
+reward 6      232.04
+reward 7      230.901
+reward 8      166.572
+reward 9      166.086
+---------  ----------
+2022-10-02 18:44:43 | [mcts]  
+---------  ----------
+StepNum     10000
+reward 0      382.888
+reward 1      367.183
+reward 10     163.859
+reward 11     162.904
+reward 12     162.867
+reward 13     162.641
+reward 14     161.213
+reward 15     161.204
+reward 16     160.722
+reward 17     160.519
+reward 18     160.394
+reward 19     160.304
+reward 2      348.529
+reward 20     160.255
+reward 21     158.675
+reward 22     157.982
+reward 23     157.418
+reward 24  -99568.2
+reward 25  -99580.5
+reward 26  -99580.5
+reward 27  -99581.7
+reward 28  -99584.5
+reward 29  -99587.2
+reward 3      245.293
+reward 4      242.63
+reward 5      233.829
+reward 6      232.04
+reward 7      230.901
+reward 8      166.572
+reward 9      166.086
+---------  ----------
+2022-10-02 18:44:55 | [mcts]  
+---------  ----------
+StepNum     11000
+reward 0      382.888
+reward 1      376.922
+reward 10     166.086
+reward 11     163.859
+reward 12     162.904
+reward 13     162.867
+reward 14     162.641
+reward 15     161.213
+reward 16     161.204
+reward 17     160.811
+reward 18     160.722
+reward 19     160.519
+reward 2      367.183
+reward 20     160.394
+reward 21     160.304
+reward 22     160.264
+reward 23     160.255
+reward 24     159.121
+reward 25     159.111
+reward 26     158.675
+reward 27     157.982
+reward 28     157.418
+reward 29  -99568.2
+reward 3      348.529
+reward 4      245.293
+reward 5      242.63
+reward 6      233.829
+reward 7      232.04
+reward 8      230.901
+reward 9      166.572
+---------  ----------

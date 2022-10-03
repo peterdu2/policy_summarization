@@ -21,7 +21,7 @@ from pytorchBaselines.a2c_ppo_acktr.model import Policy
 
 class DSRNNCoupledSimulator(ASTSimulator):
 
-    def __init__(self, model_dirs, config_names, model_names, s_0, mode, **kwargs):
+    def __init__(self, model_dirs, config_names, model_names, s_0, mode, single_render_mode=False, **kwargs):
         assert len(model_dirs) == 2, 'Provide two models for simulator'
         assert len(config_names) == 2, 'Provide two models for simulator'
 
@@ -38,6 +38,8 @@ class DSRNNCoupledSimulator(ASTSimulator):
 
         # Rendering
         self.render_frame = 0
+        self.coupled_axes = None
+        self.single_axes = []
 
         # Enviornments
         self.envs = []
@@ -69,8 +71,12 @@ class DSRNNCoupledSimulator(ASTSimulator):
             env = self.make_env(self.configs[i], None)
             self.envs.append(env)
 
-        # Create render axes
-        self.axes = self.create_render_axis()
+        if single_render_mode:
+            # Create single render axis
+            self.single_axis = self.create_single_render_axis()
+        else:
+            # Create coupled render axes
+            self.coupled_axes = self.create_coupled_render_axis()
 
         # Load each DSRNN model
         for i in range(len(model_dirs)):
@@ -104,8 +110,17 @@ class DSRNNCoupledSimulator(ASTSimulator):
         config = config_class()
         return config
 
+    
+    def create_single_render_axis(self):
+        fig, ax = plt.subplots(figsize=(7, 7))
+        ax.set_xlim(-10, 10)
+        ax.set_ylim(-10, 10)
+        ax.set_xlabel('x(m)', fontsize=16)
+        ax.set_ylabel('y(m)', fontsize=16)
+        return ax
 
-    def create_render_axis(self):
+
+    def create_coupled_render_axis(self):
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 7))
         ax1.set_xlim(-10, 10)
         ax1.set_ylim(-10, 10)
@@ -302,8 +317,130 @@ class DSRNNCoupledSimulator(ASTSimulator):
 
         return np.array(cloned_state)
 
+    def render_single(self, save_render, render_path, env_id, title=None, pause=0.05):
+        import matplotlib.pyplot as plt
+        import matplotlib.lines as mlines
+        from matplotlib import patches
 
-    def render(self, save_render, render_path, pause=0.05):
+        plt.rcParams['animation.ffmpeg_path'] = '/usr/bin/ffmpeg'
+
+        robot_color = 'yellow'
+        goal_color = 'red'
+        arrow_color = 'red'
+        arrow_style = patches.ArrowStyle("->", head_length=4, head_width=2)
+
+        def calcFOVLineEndPoint(ang, point, extendFactor):
+            # choose the extendFactor big enough
+            # so that the endPoints of the FOVLine is out of xlim and ylim of the figure
+            FOVLineRot = np.array([[np.cos(ang), -np.sin(ang), 0],
+                                   [np.sin(ang), np.cos(ang), 0],
+                                   [0, 0, 1]])
+            point.extend([1])
+            # apply rotation matrix
+            newPoint = np.matmul(FOVLineRot, np.reshape(point, [3, 1]))
+            # increase the distance between the line start point and the end point
+            newPoint = [extendFactor * newPoint[0, 0], extendFactor * newPoint[1, 0], 1]
+            return newPoint
+
+
+        artists=[]
+        ax=self.single_axis
+        if title == None:
+            ax.set_title(self.model_names[env_id])
+        else:
+            ax.set_title(title)
+
+        # add goal
+        goal=mlines.Line2D([self.envs[env_id].robot.gx], [self.envs[env_id].robot.gy], color=goal_color, marker='*', linestyle='None', markersize=15, label='Goal')
+        ax.add_artist(goal)
+        artists.append(goal)
+
+        # add robot
+        robotX,robotY=self.envs[env_id].robot.get_position()
+
+        robot=plt.Circle((robotX,robotY), self.envs[env_id].robot.radius, fill=True, color=robot_color)
+        ax.add_artist(robot)
+        artists.append(robot)
+
+        plt.legend([robot, goal], ['Robot', 'Goal'], fontsize=16)
+
+        # compute orientation in each step and add arrow to show the direction
+        radius = self.envs[env_id].robot.radius
+        arrowStartEnd=[]
+
+        robot_theta = self.envs[env_id].robot.theta if self.envs[env_id].robot.kinematics == 'unicycle' else np.arctan2(self.envs[env_id].robot.vy, self.envs[env_id].robot.vx)
+
+        arrowStartEnd.append(((robotX, robotY), (robotX + radius * np.cos(robot_theta), robotY + radius * np.sin(robot_theta))))
+
+        for i, human in enumerate(self.envs[env_id].humans):
+            theta = np.arctan2(human.vy, human.vx)
+            arrowStartEnd.append(((human.px, human.py), (human.px + radius * np.cos(theta), human.py + radius * np.sin(theta))))
+
+        arrows = [patches.FancyArrowPatch(*arrow, color=arrow_color, arrowstyle=arrow_style)
+                for arrow in arrowStartEnd]
+        for arrow in arrows:
+            ax.add_artist(arrow)
+            artists.append(arrow)
+
+
+        # draw FOV for the robot
+        # add robot FOV
+        if self.envs[env_id].robot_fov < np.pi * 2:
+            FOVAng = self.envs[0].robot_fov / 2
+            FOVLine1 = mlines.Line2D([0, 0], [0, 0], linestyle='--')
+            FOVLine2 = mlines.Line2D([0, 0], [0, 0], linestyle='--')
+
+
+            startPointX = robotX
+            startPointY = robotY
+            endPointX = robotX + radius * np.cos(robot_theta)
+            endPointY = robotY + radius * np.sin(robot_theta)
+
+            # transform the vector back to world frame origin, apply rotation matrix, and get end point of FOVLine
+            # the start point of the FOVLine is the center of the robot
+            FOVEndPoint1 = calcFOVLineEndPoint(FOVAng, [endPointX - startPointX, endPointY - startPointY], 20. / self.envs[env_id].robot.radius)
+            FOVLine1.set_xdata(np.array([startPointX, startPointX + FOVEndPoint1[0]]))
+            FOVLine1.set_ydata(np.array([startPointY, startPointY + FOVEndPoint1[1]]))
+            FOVEndPoint2 = calcFOVLineEndPoint(-FOVAng, [endPointX - startPointX, endPointY - startPointY], 20. / self.envs[env_id].robot.radius)
+            FOVLine2.set_xdata(np.array([startPointX, startPointX + FOVEndPoint2[0]]))
+            FOVLine2.set_ydata(np.array([startPointY, startPointY + FOVEndPoint2[1]]))
+
+            ax.add_artist(FOVLine1)
+            ax.add_artist(FOVLine2)
+            artists.append(FOVLine1)
+            artists.append(FOVLine2)
+
+        # add humans and change the color of them based on visibility
+        human_circles = [plt.Circle(human.get_position(), human.radius, fill=False) for human in self.envs[env_id].humans]
+
+
+        for i in range(len(self.envs[env_id].humans)):
+            ax.add_artist(human_circles[i])
+            artists.append(human_circles[i])
+
+            # green: visible; red: invisible
+            if self.envs[env_id].detect_visible(self.envs[env_id].robot, self.envs[env_id].humans[i], robot1=True):
+                human_circles[i].set_color(c='g')
+            else:
+                human_circles[i].set_color(c='r')
+            #plt.text(self.humans[i].px - 0.1, self.humans[i].py - 0.1, str(i), color='black', fontsize=12)
+            ax.text(self.envs[env_id].humans[i].px - 0.1, self.envs[env_id].humans[i].py - 0.1, str(i), color='black', fontsize=12)
+
+        if save_render:
+            plt.savefig(render_path+'/'+format(self.render_frame, '04d')+'.png')
+
+        if pause > 0:
+            plt.pause(pause)
+
+        for item in artists:
+            item.remove() # there should be a better way to do this. For example,
+            # initially use add_artist and draw_artist later on
+        for t in ax.texts:
+            t.set_visible(False)
+
+        self.render_frame += 1
+
+    def render_coupled(self, save_render, render_path, pause=0.05):
         import matplotlib.pyplot as plt
         import matplotlib.lines as mlines
         from matplotlib import patches
@@ -331,7 +468,7 @@ class DSRNNCoupledSimulator(ASTSimulator):
 
         artists=[]
         for cur_axis in range(2):
-            ax=self.axes[cur_axis]
+            ax=self.coupled_axes[cur_axis]
             ax.set_title(self.model_names[cur_axis])
 
             # add goal
@@ -419,7 +556,7 @@ class DSRNNCoupledSimulator(ASTSimulator):
         for item in artists:
             item.remove() # there should be a better way to do this. For example,
             # initially use add_artist and draw_artist later on
-        for ax in self.axes:
+        for ax in self.coupled_axes:
             for t in ax.texts:
                 t.set_visible(False)
 

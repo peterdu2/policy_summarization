@@ -30,7 +30,7 @@ class DSRNNReward(ASTReward):
                 heuristic_reward = self.get_robot_separation(robot_positions)
             else:
                 heuristic_reward = 0
-            reward = -100000 + 100 * heuristic_reward 
+            reward = 100 * heuristic_reward 
         else:
             action_separation = np.linalg.norm(robot_actions[0] - robot_actions[1])
             reward = action_separation

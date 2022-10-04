@@ -71,6 +71,11 @@ Target set:
   dsrnn11  ['14000.pt', '30800.pt']
 
   Human position set 4 (Collision Reward = 0):
-  dsrnn12 ['14000.pt', '20600.pt']
+  dsrnn12  ['14000.pt', '20600.pt']
   dsrnn13  ['20600.pt', '30800.pt']
   dsrnn14  ['14000.pt', '30800.pt']
+
+  Human position set 5 (Collision Reward = 0, new reward goal policy):
+  dsrnn15  ['14000.pt', '20600.pt']
+  dsrnn16  ['20600.pt', '30800.pt']
+  dsrnn17  ['14000.pt', '30800.pt']

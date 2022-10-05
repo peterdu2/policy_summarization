@@ -44,10 +44,10 @@ Data collection:
 	Candidates:
 		- Semantic differential questions:
 			The difference between the lowest ranked policy and middle ranked policy is:
-			very low ........................................... very high
+			very small ........................................... very large
 
 			The difference between the middle ranked policy and highest ranked policy is:
-			very low ........................................... very high
+			very small ........................................... very large
 
 		- Likart scale questions:
 			It was easy to distinguish between the lowest ranked policy and the middle ranked policy:

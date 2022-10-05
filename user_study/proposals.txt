@@ -1,0 +1,57 @@
+Position sets:
+	Position set 1:
+		dsrnn1	['14000.pt', '20600.pt']
+  		dsrnn3  ['20600.pt', '30800.pt']
+  		dsrnn5  ['14000.pt', '30800.pt']
+
+  	Position set 4:
+ 		dsrnn12	['14000.pt', '20600.pt']
+  		dsrnn13	['20600.pt', '30800.pt']
+  		dsrnn14	['14000.pt', '30800.pt']
+
+- Divide each position set into 3 policies
+	- Each policy: 6 trajectory examples (top 3 from each AST tree)
+	- 3 x 6 = 18 examples per position set
+	- Match with random sample trajectory examples
+		- 6 samples for each policy 
+
+User study groupings:
+	- 3 position sets (PS1, PS4, PS5->tbd)
+	- 18 AST examples per position set
+		- 6 per policy
+	- 18 random examples per position set
+		- 6 per policy 
+
+How to split users:
+	1) Split per position set
+		- Each user gets 1 position set
+		- Shown random set -> asked to rank policies
+		- Shown AST set -> asked to rank policies
+		- Total = 36 trajectories 
+	2) Split per random/AST
+		- Each user shown all 3 position sets for either AST or random
+		- Total = 18 x 3 = 44 trajectories 
+		- Split into stages (PS1, PS2, PS3) -> ask for ranking at end
+		- May be too many examples 
+	3) Split per random/AST
+		- Show each user one position set
+		- n users per position set
+		- need 3n users for AST, 3n users for random
+
+Data collection:
+	- policy ranking (absolute ordering)
+	- Need some sort of scale for confidence/ranking of separation of policies
+	Candidates:
+		- Semantic differential questions:
+			The difference between the lowest ranked policy and middle ranked policy is:
+			very low ........................................... very high
+
+			The difference between the middle ranked policy and highest ranked policy is:
+			very low ........................................... very high
+
+		- Likart scale questions:
+			It was easy to distinguish between the lowest ranked policy and the middle ranked policy:
+			strongly disagree, disagree, neither disagree nor agree, agree, strongly agree
+
+			It was easy to distinguish between the middle ranked policy and the highest ranked policy:
+			strongly disagree, disagree, neither disagree nor agree, agree, strongly agree

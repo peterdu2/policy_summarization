@@ -441,7 +441,7 @@ class DSRNNCoupledSimulator(ASTSimulator):
 
         self.render_frame += 1
 
-    def render_coupled(self, save_render, render_path, pause=0.05):
+    def render_coupled(self, save_render, render_path, titles, pause=0.05):
         import matplotlib.pyplot as plt
         import matplotlib.lines as mlines
         from matplotlib import patches
@@ -470,7 +470,7 @@ class DSRNNCoupledSimulator(ASTSimulator):
         artists=[]
         for cur_axis in range(2):
             ax=self.coupled_axes[cur_axis]
-            ax.set_title(self.model_names[cur_axis])
+            ax.set_title(titles[cur_axis])
 
             # add goal
             goal=mlines.Line2D([self.envs[cur_axis].robot.gx], [self.envs[cur_axis].robot.gy], color=goal_color, marker='*', linestyle='None', markersize=15, label='Goal')
@@ -545,8 +545,12 @@ class DSRNNCoupledSimulator(ASTSimulator):
                     human_circles[i].set_color(c='g')
                 else:
                     human_circles[i].set_color(c='r')
-                #plt.text(self.humans[i].px - 0.1, self.humans[i].py - 0.1, str(i), color='black', fontsize=12)
                 ax.text(self.envs[cur_axis].humans[i].px - 0.1, self.envs[cur_axis].humans[i].py - 0.1, str(i), color='black', fontsize=12)
+
+            # # Label state if collision or timeout
+            # state = self.sim_infos[cur_axis]
+            # if isinstance(state['info'], Collision):
+            #     ax.text(-9,7, 'COLLISION', color='red', fontsize=20)
 
         if save_render:
             plt.savefig(render_path+'/'+format(self.render_frame, '04d')+'.png')

@@ -28,9 +28,13 @@ Selected policies:
 13200.pt: episode mean reward: 9.81915886
 
 Final policies: 
-14000.pt: episode mean reward: 10.07230044  ID = Policy A
+** 14000.pt: episode mean reward: 10.07230044  ID = Policy A
 20600.pt: episode mean reward: 16.52406858  ID = Policy B
 30800.pt: episode mean reward: 20.23076747  ID = Policy C
+
+Testing policies:
+13000.pt: episode mean reward: 9.144999219999999
+34400.pt: episode mean reward: 21.548123050000004 
 
 
 Results:
@@ -79,3 +83,9 @@ Target set:
   dsrnn15  ['14000.pt', '20600.pt']
   dsrnn16  ['20600.pt', '30800.pt']
   dsrnn17  ['14000.pt', '30800.pt']
+
+New policy set
+  Human position set 6 (Collision Reward = 0, original reward): *Dervied from PS1 
+  dsrnn18  ['13000.pt', '20600.pt']
+  dsrnn19  ['20600.pt', '30800.pt']
+  dsrnn20  ['13000.pt', '30800.pt']

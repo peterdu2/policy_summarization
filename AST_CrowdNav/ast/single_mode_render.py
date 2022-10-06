@@ -9,7 +9,7 @@ from simulators.dsrnn_coupled_simulator import DSRNNCoupledSimulator
 
 model_dirs = ['dsrnn_models/policy_summarization_10_humans/', 'dsrnn_models/policy_summarization_10_humans/']
 config_name = ['config', 'config']
-model_names = ['14000.pt', '30800.pt']
+model_names = ['30800.pt', '30800.pt']
 
 s_0 = []
 s_0.append([-5., 4., 7., -2.])
@@ -28,7 +28,7 @@ mode = 'OBSERVATION_NOISE'
 mode = 'DIRECT_ACTION'
 
 render_env_id = 0
-policy_id = 'A'
+policy_id = 'C'
 log_folder_name = 'ast_dsrnn_14'
 render_path = '/home/peter/policy_summarization/AST_CrowdNav/ast/results/data/' \
               + log_folder_name + '/' + policy_id + '_renders'

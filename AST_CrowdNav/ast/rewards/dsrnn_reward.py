@@ -25,33 +25,33 @@ class DSRNNReward(ASTReward):
         robot_positions = info['robot_positions']
         robot_actions = info['robot_actions']
 
-        if (is_terminal):
-            if self.use_heuristic:
-                heuristic_reward = self.get_robot_separation(robot_positions)
-            else:
-                heuristic_reward = 0
-            reward = 100 * heuristic_reward 
-        else:
-            action_separation = np.linalg.norm(robot_actions[0] - robot_actions[1])
-            reward = action_separation
-            # Check for collision
-            for state in sim_infos:
-                if isinstance(state['info'], Collision):
-                    # If collision detected overwrite reward
-                    reward = self.collision_reward + self.get_robot_separation(robot_positions)
-                    break
-
-        # if (is_goal):  # At least one of the robots has crashed
-        #     reward = self.collision_reward + self.get_robot_separation(robot_positions)
-        # elif (is_terminal):
+        # if (is_terminal):
         #     if self.use_heuristic:
         #         heuristic_reward = self.get_robot_separation(robot_positions)
         #     else:
         #         heuristic_reward = 0
-        #     reward = -100000 + 100 * heuristic_reward 
+        #     reward = 100 * heuristic_reward 
         # else:
         #     action_separation = np.linalg.norm(robot_actions[0] - robot_actions[1])
         #     reward = action_separation
+        #     # Check for collision
+        #     for state in sim_infos:
+        #         if isinstance(state['info'], Collision):
+        #             # If collision detected overwrite reward
+        #             reward = self.collision_reward + self.get_robot_separation(robot_positions)
+        #             break
+
+        if (is_goal):  # At least one of the robots has crashed
+            reward = self.collision_reward + self.get_robot_separation(robot_positions)
+        elif (is_terminal):
+            if self.use_heuristic:
+                heuristic_reward = self.get_robot_separation(robot_positions)
+            else:
+                heuristic_reward = 0
+            reward = -100000 + 100 * heuristic_reward 
+        else:
+            action_separation = np.linalg.norm(robot_actions[0] - robot_actions[1])
+            reward = action_separation
 
         return reward
 

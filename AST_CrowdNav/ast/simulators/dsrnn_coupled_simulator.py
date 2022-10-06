@@ -285,9 +285,9 @@ class DSRNNCoupledSimulator(ASTSimulator):
 
     def is_goal(self):
         # Stop search when one policy results in collision
-        # for state in self.sim_infos:
-        #     if isinstance(state['info'], Collision):
-        #         return True
+        for state in self.sim_infos:
+            if isinstance(state['info'], Collision):
+                return True
         return False
         
 

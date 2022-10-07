@@ -1,0 +1,42 @@
+2022-10-07 14:44:39 | [mcts]  
+--------  -------
+StepNum   1000
+reward 0  1494.97
+reward 1  1487.59
+reward 2  1483.53
+reward 3  1445.33
+reward 4  1436.31
+reward 5  1409.2
+reward 6  1406.69
+reward 7  1369.71
+reward 8  1346.47
+reward 9  1329.67
+--------  -------
+2022-10-07 14:44:50 | [mcts]  
+--------  -------
+StepNum   2000
+reward 0  1596.65
+reward 1  1574.73
+reward 2  1574.42
+reward 3  1513.8
+reward 4  1494.97
+reward 5  1493.57
+reward 6  1487.59
+reward 7  1483.53
+reward 8  1467.69
+reward 9  1464.07
+--------  -------
+2022-10-07 14:45:01 | [mcts]  
+--------  -------
+StepNum   3000
+reward 0  1596.65
+reward 1  1588.97
+reward 2  1580.99
+reward 3  1574.73
+reward 4  1574.42
+reward 5  1560.69
+reward 6  1545.25
+reward 7  1519.51
+reward 8  1513.8
+reward 9  1494.97
+--------  -------

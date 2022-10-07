@@ -1,0 +1,112 @@
+2022-10-07 14:43:53 | [mcts]  
+--------  -------
+StepNum   1000
+reward 0  1378.56
+reward 1  1339.8
+reward 2  1323.9
+reward 3  1252.6
+reward 4  1244.73
+reward 5  1233.37
+reward 6  1213.36
+reward 7  1040.21
+reward 8  1037.67
+reward 9  1003.2
+--------  -------
+2022-10-07 14:44:02 | [mcts]  
+--------  -------
+StepNum   2000
+reward 0  1515.65
+reward 1  1473.43
+reward 2  1419.36
+reward 3  1394.53
+reward 4  1378.56
+reward 5  1358.34
+reward 6  1339.8
+reward 7  1323.9
+reward 8  1319.87
+reward 9  1290.45
+--------  -------
+2022-10-07 14:44:12 | [mcts]  
+--------  -------
+StepNum   3000
+reward 0  1528.11
+reward 1  1515.65
+reward 2  1473.43
+reward 3  1419.36
+reward 4  1394.53
+reward 5  1378.56
+reward 6  1364.81
+reward 7  1358.34
+reward 8  1339.8
+reward 9  1333.1
+--------  -------
+2022-10-07 14:44:21 | [mcts]  
+--------  -------
+StepNum   4000
+reward 0  1528.11
+reward 1  1515.65
+reward 2  1487.44
+reward 3  1473.43
+reward 4  1419.36
+reward 5  1394.53
+reward 6  1378.56
+reward 7  1377.43
+reward 8  1364.81
+reward 9  1358.34
+--------  -------
+2022-10-07 14:44:33 | [mcts]  
+--------  -------
+StepNum   5000
+reward 0  1528.11
+reward 1  1515.65
+reward 2  1487.44
+reward 3  1473.43
+reward 4  1419.36
+reward 5  1394.53
+reward 6  1381.86
+reward 7  1380.07
+reward 8  1378.56
+reward 9  1377.43
+--------  -------
+2022-10-07 14:44:44 | [mcts]  
+--------  -------
+StepNum   6000
+reward 0  1528.11
+reward 1  1515.65
+reward 2  1487.44
+reward 3  1473.43
+reward 4  1441.19
+reward 5  1419.36
+reward 6  1394.53
+reward 7  1381.86
+reward 8  1380.07
+reward 9  1378.56
+--------  -------
+2022-10-07 14:44:54 | [mcts]  
+--------  -------
+StepNum   7000
+reward 0  1528.11
+reward 1  1515.65
+reward 2  1487.44
+reward 3  1477.14
+reward 4  1473.43
+reward 5  1441.19
+reward 6  1419.36
+reward 7  1394.53
+reward 8  1381.86
+reward 9  1380.07
+--------  -------
+2022-10-07 14:45:06 | [mcts]  
+--------  -------
+StepNum   8000
+reward 0  1528.11
+reward 1  1515.65
+reward 2  1500.78
+reward 3  1487.44
+reward 4  1477.14
+reward 5  1473.43
+reward 6  1441.19
+reward 7  1422.01
+reward 8  1419.36
+reward 9  1409.27
+--------  -------

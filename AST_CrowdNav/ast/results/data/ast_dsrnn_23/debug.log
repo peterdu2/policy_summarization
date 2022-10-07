@@ -1,0 +1,196 @@
+2022-10-07 10:43:34 | [mcts]  
+--------  -------
+StepNum   1000
+reward 0  2236.7
+reward 1  1516.82
+reward 2  1506.88
+reward 3  1501.57
+reward 4  1497.08
+reward 5  1459.19
+reward 6  1440.02
+reward 7  1424.64
+reward 8  1403.2
+reward 9  1393.45
+--------  -------
+2022-10-07 10:43:46 | [mcts]  
+--------  -------
+StepNum   2000
+reward 0  2236.7
+reward 1  1607.42
+reward 2  1558.77
+reward 3  1530.49
+reward 4  1516.82
+reward 5  1506.88
+reward 6  1505.41
+reward 7  1501.57
+reward 8  1497.08
+reward 9  1485.94
+--------  -------
+2022-10-07 10:43:57 | [mcts]  
+--------  -------
+StepNum   3000
+reward 0  2236.7
+reward 1  1607.42
+reward 2  1568.1
+reward 3  1558.77
+reward 4  1530.49
+reward 5  1516.82
+reward 6  1511.53
+reward 7  1506.88
+reward 8  1505.41
+reward 9  1501.57
+--------  -------
+2022-10-07 10:44:07 | [mcts]  
+--------  -------
+StepNum   4000
+reward 0  2236.7
+reward 1  1636.24
+reward 2  1616.08
+reward 3  1607.42
+reward 4  1606.07
+reward 5  1576.29
+reward 6  1568.1
+reward 7  1558.77
+reward 8  1530.49
+reward 9  1516.82
+--------  -------
+2022-10-07 10:44:18 | [mcts]  
+--------  -------
+StepNum   5000
+reward 0  2236.7
+reward 1  2181.25
+reward 2  1636.24
+reward 3  1616.08
+reward 4  1607.42
+reward 5  1606.07
+reward 6  1604.5
+reward 7  1593.1
+reward 8  1587.51
+reward 9  1576.29
+--------  -------
+2022-10-07 10:44:28 | [mcts]  
+--------  -------
+StepNum   6000
+reward 0  2236.7
+reward 1  2181.25
+reward 2  1719.39
+reward 3  1636.24
+reward 4  1631.29
+reward 5  1616.08
+reward 6  1607.42
+reward 7  1606.07
+reward 8  1604.5
+reward 9  1593.1
+--------  -------
+2022-10-07 10:44:40 | [mcts]  
+--------  -------
+StepNum   7000
+reward 0  2236.7
+reward 1  2181.25
+reward 2  1719.39
+reward 3  1656.14
+reward 4  1639.55
+reward 5  1636.24
+reward 6  1631.29
+reward 7  1616.08
+reward 8  1607.42
+reward 9  1606.07
+--------  -------
+2022-10-07 10:44:50 | [mcts]  
+--------  -------
+StepNum   8000
+reward 0  2236.7
+reward 1  2181.25
+reward 2  1719.39
+reward 3  1656.14
+reward 4  1639.55
+reward 5  1636.24
+reward 6  1631.29
+reward 7  1620.57
+reward 8  1616.08
+reward 9  1607.42
+--------  -------
+2022-10-07 10:45:01 | [mcts]  
+--------  -------
+StepNum   9000
+reward 0  2236.7
+reward 1  2181.25
+reward 2  1958.66
+reward 3  1719.39
+reward 4  1711.74
+reward 5  1656.14
+reward 6  1639.55
+reward 7  1636.24
+reward 8  1631.29
+reward 9  1620.57
+--------  -------
+2022-10-07 10:45:12 | [mcts]  
+--------  --------
+StepNum   10000
+reward 0   2236.7
+reward 1   2181.25
+reward 2   1958.66
+reward 3   1719.39
+reward 4   1711.74
+reward 5   1692.16
+reward 6   1656.14
+reward 7   1644.71
+reward 8   1639.55
+reward 9   1636.24
+--------  --------
+2022-10-07 10:45:23 | [mcts]  
+--------  --------
+StepNum   11000
+reward 0   2236.7
+reward 1   2181.25
+reward 2   1958.66
+reward 3   1719.39
+reward 4   1711.74
+reward 5   1692.16
+reward 6   1656.14
+reward 7   1644.71
+reward 8   1639.55
+reward 9   1636.24
+--------  --------
+2022-10-07 10:45:34 | [mcts]  
+--------  --------
+StepNum   12000
+reward 0   2236.7
+reward 1   2181.25
+reward 2   1958.66
+reward 3   1844.66
+reward 4   1719.39
+reward 5   1711.74
+reward 6   1692.16
+reward 7   1656.14
+reward 8   1647.36
+reward 9   1644.71
+--------  --------
+2022-10-07 10:45:45 | [mcts]  
+--------  --------
+StepNum   13000
+reward 0   2236.7
+reward 1   2181.25
+reward 2   1958.66
+reward 3   1844.66
+reward 4   1719.39
+reward 5   1711.74
+reward 6   1693.34
+reward 7   1692.16
+reward 8   1656.14
+reward 9   1647.36
+--------  --------
+2022-10-07 10:45:56 | [mcts]  
+--------  --------
+StepNum   14000
+reward 0   2236.7
+reward 1   2181.25
+reward 2   1958.66
+reward 3   1844.66
+reward 4   1719.39
+reward 5   1711.74
+reward 6   1693.34
+reward 7   1692.16
+reward 8   1656.14
+reward 9   1647.36
+--------  --------

@@ -1,0 +1,224 @@
+2022-10-07 10:43:14 | [mcts]  
+--------  --------
+StepNum   1000
+reward 0   815.976
+reward 1   736.962
+reward 2   727.143
+reward 3   618.553
+reward 4   612.918
+reward 5   595.766
+reward 6   566.313
+reward 7   525.382
+reward 8   515.251
+reward 9   506.729
+--------  --------
+2022-10-07 10:43:25 | [mcts]  
+--------  --------
+StepNum   2000
+reward 0   815.976
+reward 1   792.926
+reward 2   736.962
+reward 3   727.143
+reward 4   634.474
+reward 5   619.488
+reward 6   618.553
+reward 7   613.077
+reward 8   612.918
+reward 9   602.153
+--------  --------
+2022-10-07 10:43:37 | [mcts]  
+--------  --------
+StepNum   3000
+reward 0  1142.54
+reward 1   975.414
+reward 2   815.976
+reward 3   792.926
+reward 4   736.962
+reward 5   727.143
+reward 6   666.04
+reward 7   663.407
+reward 8   639.913
+reward 9   634.474
+--------  --------
+2022-10-07 10:43:48 | [mcts]  
+--------  --------
+StepNum   4000
+reward 0  1142.54
+reward 1   975.414
+reward 2   923.518
+reward 3   815.976
+reward 4   792.926
+reward 5   736.962
+reward 6   727.143
+reward 7   703.723
+reward 8   692.119
+reward 9   691.273
+--------  --------
+2022-10-07 10:43:59 | [mcts]  
+--------  --------
+StepNum   5000
+reward 0  1142.54
+reward 1   975.414
+reward 2   923.518
+reward 3   833.595
+reward 4   815.976
+reward 5   804.21
+reward 6   792.926
+reward 7   744.353
+reward 8   736.962
+reward 9   727.143
+--------  --------
+2022-10-07 10:44:09 | [mcts]  
+--------  --------
+StepNum   6000
+reward 0  1142.54
+reward 1   975.414
+reward 2   923.518
+reward 3   833.595
+reward 4   815.976
+reward 5   804.21
+reward 6   792.926
+reward 7   744.353
+reward 8   736.962
+reward 9   727.143
+--------  --------
+2022-10-07 10:44:20 | [mcts]  
+--------  --------
+StepNum   7000
+reward 0  1142.54
+reward 1   975.414
+reward 2   923.518
+reward 3   833.595
+reward 4   815.976
+reward 5   804.21
+reward 6   792.926
+reward 7   747.755
+reward 8   744.353
+reward 9   736.962
+--------  --------
+2022-10-07 10:44:31 | [mcts]  
+--------  --------
+StepNum   8000
+reward 0  1142.54
+reward 1   975.414
+reward 2   923.518
+reward 3   833.595
+reward 4   815.976
+reward 5   804.21
+reward 6   793.593
+reward 7   792.926
+reward 8   747.755
+reward 9   744.353
+--------  --------
+2022-10-07 10:44:41 | [mcts]  
+--------  --------
+StepNum   9000
+reward 0  1142.54
+reward 1   975.414
+reward 2   923.518
+reward 3   833.595
+reward 4   815.976
+reward 5   804.21
+reward 6   793.593
+reward 7   792.926
+reward 8   747.755
+reward 9   744.353
+--------  --------
+2022-10-07 10:44:52 | [mcts]  
+--------  ---------
+StepNum   10000
+reward 0   1142.54
+reward 1    975.414
+reward 2    923.518
+reward 3    833.595
+reward 4    815.976
+reward 5    804.21
+reward 6    793.593
+reward 7    792.926
+reward 8    747.755
+reward 9    744.353
+--------  ---------
+2022-10-07 10:45:03 | [mcts]  
+--------  ---------
+StepNum   11000
+reward 0   1142.54
+reward 1    975.414
+reward 2    923.518
+reward 3    833.595
+reward 4    815.976
+reward 5    812.885
+reward 6    804.21
+reward 7    793.593
+reward 8    792.926
+reward 9    747.755
+--------  ---------
+2022-10-07 10:45:13 | [mcts]  
+--------  ---------
+StepNum   12000
+reward 0   1142.54
+reward 1    975.414
+reward 2    923.518
+reward 3    833.595
+reward 4    815.976
+reward 5    812.885
+reward 6    804.21
+reward 7    793.593
+reward 8    792.926
+reward 9    750.351
+--------  ---------
+2022-10-07 10:45:24 | [mcts]  
+--------  ---------
+StepNum   13000
+reward 0   1142.54
+reward 1    975.414
+reward 2    923.518
+reward 3    833.595
+reward 4    815.976
+reward 5    812.885
+reward 6    804.21
+reward 7    793.593
+reward 8    792.926
+reward 9    789.031
+--------  ---------
+2022-10-07 10:45:36 | [mcts]  
+--------  ---------
+StepNum   14000
+reward 0   1142.54
+reward 1    975.414
+reward 2    923.518
+reward 3    833.595
+reward 4    815.976
+reward 5    812.885
+reward 6    804.21
+reward 7    793.593
+reward 8    792.926
+reward 9    789.031
+--------  ---------
+2022-10-07 10:45:46 | [mcts]  
+--------  ---------
+StepNum   15000
+reward 0   1142.54
+reward 1    975.414
+reward 2    923.518
+reward 3    833.595
+reward 4    815.976
+reward 5    812.885
+reward 6    804.21
+reward 7    793.593
+reward 8    792.926
+reward 9    789.031
+--------  ---------
+2022-10-07 10:45:58 | [mcts]  
+--------  ---------
+StepNum   16000
+reward 0   1142.54
+reward 1    975.414
+reward 2    923.518
+reward 3    833.595
+reward 4    815.976
+reward 5    812.885
+reward 6    804.21
+reward 7    793.593
+reward 8    792.926
+reward 9    789.031
+--------  ---------

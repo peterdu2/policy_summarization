@@ -7,10 +7,14 @@ from crowd_sim.envs.utils.info import *
 class DSRNNReward(ASTReward):
     def __init__(self,
                  collision_reward,
+                 goal_mode,
                  num_humans=10,
                  use_heuristic=True):
 
+        assert goal_mode == 'COLLISION' or goal_mode == 'REACHGOAL'
+
         self.collision_reward = collision_reward
+        self.goal_mode = goal_mode
         self.c_num_humans = num_humans
         self.use_heuristic = use_heuristic
         super().__init__()
@@ -25,24 +29,10 @@ class DSRNNReward(ASTReward):
         robot_positions = info['robot_positions']
         robot_actions = info['robot_actions']
 
-        # if (is_terminal):
-        #     if self.use_heuristic:
-        #         heuristic_reward = self.get_robot_separation(robot_positions)
-        #     else:
-        #         heuristic_reward = 0
-        #     reward = 100 * heuristic_reward 
-        # else:
-        #     action_separation = np.linalg.norm(robot_actions[0] - robot_actions[1])
-        #     reward = action_separation
-        #     # Check for collision
-        #     for state in sim_infos:
-        #         if isinstance(state['info'], Collision):
-        #             # If collision detected overwrite reward
-        #             reward = self.collision_reward + self.get_robot_separation(robot_positions)
-        #             break
-
-        if (is_goal):  # At least one of the robots has crashed
-            reward = self.collision_reward + self.get_robot_separation(robot_positions)
+        if (is_goal):
+            reward = 100 * self.get_robot_separation(robot_positions)
+            if self.goal_mode == 'COLLISION':
+                reward += self.collision_reward
         elif (is_terminal):
             if self.use_heuristic:
                 heuristic_reward = self.get_robot_separation(robot_positions)
@@ -50,8 +40,13 @@ class DSRNNReward(ASTReward):
                 heuristic_reward = 0
             reward = -100000 + 100 * heuristic_reward 
         else:
-            action_separation = np.linalg.norm(robot_actions[0] - robot_actions[1])
-            reward = action_separation
+            # Calculate action separation
+            reward = np.linalg.norm(robot_actions[0] - robot_actions[1])
+            # Check for collisions
+            for state in sim_infos:
+                if isinstance(state['info'], Collision):
+                    reward += self.collision_reward
+                    break
 
         return reward
 

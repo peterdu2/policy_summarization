@@ -21,7 +21,8 @@ from pytorchBaselines.a2c_ppo_acktr.model import Policy
 
 class DSRNNCoupledSimulator(ASTSimulator):
 
-    def __init__(self, model_dirs, config_names, model_names, s_0, mode, single_render_mode=False, **kwargs):
+    def __init__(self, model_dirs, config_names, model_names, s_0,
+                 mode, goal_mode, single_render_mode=False, **kwargs):
         assert len(model_dirs) == 2, 'Provide two models for simulator'
         assert len(config_names) == 2, 'Provide two models for simulator'
 
@@ -29,6 +30,7 @@ class DSRNNCoupledSimulator(ASTSimulator):
         self.s_0 = s_0
         self.goal = False
         self.mode = mode
+        self.goal_mode = goal_mode
 
         # Configs
         self.config_filepaths = []
@@ -284,10 +286,18 @@ class DSRNNCoupledSimulator(ASTSimulator):
 
 
     def is_goal(self):
-        # Stop search when one policy results in collision
-        for state in self.sim_infos:
-            if isinstance(state['info'], Collision):
-                return True
+        assert self.goal_mode == 'COLLISION' or self.goal_mode == 'REACHGOAL'
+        if self.goal_mode == 'COLLISION':
+            # Stop search when one policy results in collision
+            for state in self.sim_infos:
+                if isinstance(state['info'], Collision):
+                    return True
+        else:
+            # Stop search when one policy reaches goal
+            for state in self.sim_infos:
+                if isinstance(state['info'], ReachGoal):
+                    return True
+                    
         return False
         
 

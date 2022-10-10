@@ -55,3 +55,12 @@ Data collection:
 
 			It was easy to distinguish between the middle ranked policy and the highest ranked policy:
 			strongly disagree, disagree, neither disagree nor agree, agree, strongly agree
+
+
+Final Position Sets:
+  Human position set 8 (Collision Reward = 0):
+  Reward: End episode if one policy reaches goal (goal_mode = REACHGOAL)
+          Scale separatation reward at goal by alpha = 100 (same as terminal condition)
+  dsrnn24  ['14000.pt', '20600.pt']
+  dsrnn25  ['20600.pt', '34400.pt']
+  dsrnn26  ['14000.pt', '34400.pt']

@@ -38,6 +38,7 @@ How to split users:
 		- n users per position set
 		- need 3n users for AST, 3n users for random
 
+EXPERIMENT 1: (Ranking 3 policies)
 Data collection:
 	- policy ranking (absolute ordering)
 	- Need some sort of scale for confidence/ranking of separation of policies
@@ -55,6 +56,17 @@ Data collection:
 
 			It was easy to distinguish between the middle ranked policy and the highest ranked policy:
 			strongly disagree, disagree, neither disagree nor agree, agree, strongly agree
+
+EXPERIMENT 2: (Ranking 2 policies):
+Data collection:
+	- Show each person three scenarios (AB, BC, AC) and ask them to select the policy they think is best in 
+	  each pair. 
+	- Ask for confidence of rating 
+	- Use different human position set than Experiment 1
+	- Rename policies 
+	- Desired data: 
+		- Accuracy (how many times do users label correct policy in pair)
+		- Confidence (how confident are users in their labels)
 
 
 Final Position Sets:

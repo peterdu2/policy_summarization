@@ -118,3 +118,10 @@ New policy set
   dsrnn30  ['14000.pt', '20600.pt']
   dsrnn31  ['20600.pt', '34400.pt']
   dsrnn32  ['14000.pt', '34400.pt']
+
+  Human position set 111 (Collision Reward = 0):
+  Reward: End episode if one policy reaches goal (goal_mode = REACHGOAL)
+          Scale separatation reward at goal by alpha = 100 (same as terminal condition)
+  dsrnn33  ['14000.pt', '20600.pt']
+  dsrnn34  ['20600.pt', '34400.pt']
+  dsrnn35  ['14000.pt', '34400.pt']

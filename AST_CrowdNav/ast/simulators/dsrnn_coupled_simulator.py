@@ -117,8 +117,8 @@ class DSRNNCoupledSimulator(ASTSimulator):
         fig, ax = plt.subplots(figsize=(7, 7))
         ax.set_xlim(-10, 10)
         ax.set_ylim(-10, 10)
-        ax.set_xlabel('x(m)', fontsize=16)
-        ax.set_ylabel('y(m)', fontsize=16)
+        #ax.set_xlabel('x(m)', fontsize=16)
+        #ax.set_ylabel('y(m)', fontsize=16)
         return ax
 
 
@@ -126,12 +126,12 @@ class DSRNNCoupledSimulator(ASTSimulator):
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 7))
         ax1.set_xlim(-10, 10)
         ax1.set_ylim(-10, 10)
-        ax1.set_xlabel('x(m)', fontsize=16)
-        ax1.set_ylabel('y(m)', fontsize=16)
+        #ax1.set_xlabel('x(m)', fontsize=16)
+        #ax1.set_ylabel('y(m)', fontsize=16)
         ax2.set_xlim(-10, 10)
         ax2.set_ylim(-10, 10)
-        ax2.set_xlabel('x(m)', fontsize=16)
-        ax2.set_ylabel('y(m)', fontsize=16)
+        #ax2.set_xlabel('x(m)', fontsize=16)
+        #ax2.set_ylabel('y(m)', fontsize=16)
         return ax1, ax2
 
 
@@ -480,7 +480,7 @@ class DSRNNCoupledSimulator(ASTSimulator):
         artists=[]
         for cur_axis in range(2):
             ax=self.coupled_axes[cur_axis]
-            ax.set_title(titles[cur_axis])
+            ax.set_title(titles[cur_axis], fontsize=20, color='blue', fontweight='bold')
 
             # add goal
             goal=mlines.Line2D([self.envs[cur_axis].robot.gx], [self.envs[cur_axis].robot.gy], color=goal_color, marker='*', linestyle='None', markersize=15, label='Goal')
@@ -561,6 +561,9 @@ class DSRNNCoupledSimulator(ASTSimulator):
             # state = self.sim_infos[cur_axis]
             # if isinstance(state['info'], Collision):
             #     ax.text(-9,7, 'COLLISION', color='red', fontsize=20)
+
+            ax.get_yaxis().set_visible(False)
+            ax.get_xaxis().set_visible(False)
 
         if save_render:
             plt.savefig(render_path+'/'+format(self.render_frame, '04d')+'.png')

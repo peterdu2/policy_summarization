@@ -83,3 +83,34 @@ Final Position Sets:
   dsrnn30  ['14000.pt', '20600.pt']
   dsrnn31  ['20600.pt', '34400.pt']
   dsrnn32  ['14000.pt', '34400.pt']
+
+Naming Map:
+	HPS8 (AST):
+		14000.pt: Robot 2
+		20600.pt: Robot 3
+		34400.pt: Robot 1
+	HPS8 (Random):
+		14000.pt: Robot 1
+		20600.pt: Robot 3
+		34400.pt: Robot 2
+
+	HPS10 (AST):
+		14000.pt: Robot 1
+		20600.pt: Robot 3
+		34400.pt: Robot 2
+	HPS10 (Random):
+		14000.pt: Robot 3
+		20600.pt: Robot 1
+		34400.pt: Robot 2
+
+
+Survey orderings:
+Task 1 Set 1: Random	HPS8	Robot 1: 14000.pt, Robot 2: 34000.pt, Robot 3: 20600.pt
+Task 1 Set 2: AST		HPS8	Robot 1: 34000.pt, Robot 2: 14000.pt, Robot 3: 20600.pt
+
+Task 2 V1: AST			HPS10	Robot 1: 14000.pt, Robot 2: 34400.pt
+Task 2 V2: Random		HPS10	Robot 1: 20600.pt, Robot 2: 34400.pt
+Task 2 V3: Random		HPS10	Robot 2: 34400.pt, Robot 3: 14000.pt
+Task 2 V4: AST			HPS10	Robot 2: 34400.pt, Robot 3: 20600.pt
+Task 2 V5: AST			HPS10	Robot 1: 14000.pt, Robot 3: 20600.pt
+Task 2 V6: Random		HPS10	Robot 1: 20600.pt, Robot 3: 14000.pt

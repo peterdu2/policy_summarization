@@ -25,22 +25,22 @@ y_noise_high=0.25
 # Env args
 max_path_length = 100
 s_0 = []
-s_0.append([-5., 4., 7., -2.])
-s_0.append([-1.9764521104695284, 3.673416349134316])
-s_0.append([-1.3916318531059858, -4.311028515571641])
-s_0.append([2.56749983681399, -2.8436072010801905])
-s_0.append([0.382823965553917, 0.9261922797511946])
-s_0.append([-3.5008964915665364, -1.244077560533835])
-s_0.append([1.8364308394984743, -6.473900760196651])
-s_0.append([3.561697860813725, -0.53723735189354574])
-s_0.append([4.213509392947646, 1.356352793759812])
-s_0.append([5.92327303238429, 1.5992114112982367])
+s_0.append([5., -7.5, -5., 7.5])
+s_0.append([0.9764521104695284, -0.673416349134316])
+s_0.append([-0.3916318531059858, -2.311028515571641])
+s_0.append([2.56749983681399, -1.8436072010801905])
+s_0.append([2.382823965553917, 0.9261922797511946])
+s_0.append([-1.7508964915665364, -4.244077560533835])
+s_0.append([1.8364308394984743, -4.473900760196651])
+s_0.append([-2.561697860813725, 0.13723735189354574])
+s_0.append([4.213509392947646, 2.556352793759812])
+s_0.append([0.522327303238429, 4.3592114112982367])
 s_0.append([-2.5587340425394998, 1.7638743741024])
 
 # Logging args
-base_log_dir = '/home/peterdu2/policy_summarization/AST_CrowdNav/ast/results/data'
-log_folder_name = 'ast_dsrnn_32'
-batch_runner_path = '/home/peterdu2/policy_summarization/AST_CrowdNav/ast/batch_runner.py'
+base_log_dir = '/home/peter/policy_summarization/AST_CrowdNav/ast/results/data'
+log_folder_name = 'ast_dsrnn_38'
+batch_runner_path = '/home/peter/policy_summarization/AST_CrowdNav/ast/batch_runner.py'
 sim_config_path = model_dir_path + 'configs/config.py'
 
 

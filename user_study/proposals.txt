@@ -105,8 +105,8 @@ Naming Map:
 
 
 Survey orderings:
-Task 1 Set 1: Random	HPS8	Robot 1: 14000.pt, Robot 2: 34000.pt, Robot 3: 20600.pt
-Task 1 Set 2: AST		HPS8	Robot 1: 34000.pt, Robot 2: 14000.pt, Robot 3: 20600.pt
+Task 1 Set 1: Random	HPS8	Robot 1: 14000.pt, Robot 2: 34400.pt, Robot 3: 20600.pt
+Task 1 Set 2: AST		HPS8	Robot 1: 34400.pt, Robot 2: 14000.pt, Robot 3: 20600.pt
 
 Task 2 V1: AST			HPS10	Robot 1: 14000.pt, Robot 2: 34400.pt
 Task 2 V2: Random		HPS10	Robot 1: 20600.pt, Robot 2: 34400.pt

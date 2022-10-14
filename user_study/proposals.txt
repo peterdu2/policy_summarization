@@ -116,12 +116,12 @@ Task 2 V5: AST			HPS10	Robot 1: 14000.pt, Robot 3: 20600.pt
 Task 2 V6: Random		HPS10	Robot 1: 20600.pt, Robot 3: 14000.pt
 
 Survey orderings (Set 2):
-Task 1 Set 1: Random	HPS10	Robot 1: .pt, Robot 2: .pt, Robot 3: .pt
-Task 1 Set 2: AST		HPS10	Robot 1: .pt, Robot 2: .pt, Robot 3: .pt
+Task 1 Set 1: Random	HPS10	Robot 1: 20600.pt, Robot 2: 34400.pt, Robot 3: 14000.pt
+Task 1 Set 2: AST		HPS10	Robot 1: 14000.pt, Robot 2: 34400.pt, Robot 3: 20600.pt
 
-Task 2 V1: AST			HPS8	Robot 1: .pt, Robot 2: .pt
-Task 2 V2: Random		HPS8	Robot 1: .pt, Robot 2: .pt
-Task 2 V3: Random		HPS8	Robot 2: .pt, Robot 3: .pt
-Task 2 V4: AST			HPS8	Robot 2: .pt, Robot 3: .pt
-Task 2 V5: AST			HPS8	Robot 1: .pt, Robot 3: .pt
-Task 2 V6: Random		HPS8	Robot 1: .pt, Robot 3: .pt
+Task 2 V1: AST			HPS8	Robot 1: 34400.pt, Robot 2: 14000.pt
+Task 2 V2: Random		HPS8	Robot 1: 14000.pt, Robot 2: 34400.pt
+Task 2 V3: Random		HPS8	Robot 2: 34400.pt, Robot 3: 20600.pt
+Task 2 V4: AST			HPS8	Robot 2: 14000.pt, Robot 3: 20600.pt
+Task 2 V5: AST			HPS8	Robot 1: 34400.pt, Robot 3: 20600.pt
+Task 2 V6: Random		HPS8	Robot 1: 14000.pt, Robot 3: 20600.pt

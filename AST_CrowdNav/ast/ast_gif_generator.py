@@ -3,9 +3,9 @@ import subprocess
 
 
 if __name__ == '__main__':
-    render_dir = '/home/peter/policy_summarization/AST_CrowdNav/ast/results/data/random_sample_data/human_position_set_8/13'
-    palette_path = '/home/peter/policy_summarization/AST_CrowdNav/ast/palette.png'
-    output_dir = '/home/peter/policy_summarization/AST_CrowdNav/ast/results/data/random_sample_data/human_position_set_8/13/gifs'
+    render_dir = '/home/peterdu2/policy_summarization/AST_CrowdNav/ast/results/data/random_sample_data/human_position_set_12/13'
+    palette_path = '/home/peterdu2/policy_summarization/AST_CrowdNav/ast/palette.png'
+    output_dir = '/home/peterdu2/policy_summarization/AST_CrowdNav/ast/results/data/random_sample_data/human_position_set_12/13/gifs'
     
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)

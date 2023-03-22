@@ -134,3 +134,5 @@ New policy set
   dsrnn38  ['14000.pt', '34400.pt']
 
   Palette generation command: ffmpeg -i %04d.png -vf palettegen palette.png
+
+

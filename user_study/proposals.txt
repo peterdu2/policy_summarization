@@ -168,7 +168,9 @@ Ver. hps10
 
 
 
-
+  14000.pt, total_timesteps=5040360, avg_reward=10.07230044
+  20600.pt, total_timesteps=7416360, avg_reward=16.52406858
+  34400.pt, total_timesteps=12384360, avg_reward=21.548123050000004
 
 
 

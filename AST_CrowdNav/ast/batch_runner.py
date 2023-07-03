@@ -38,9 +38,9 @@ s_0.append([0.522327303238429, 4.3592114112982367])
 s_0.append([-2.5587340425394998, 1.7638743741024])
 
 # Logging args
-base_log_dir = '/home/peter/policy_summarization/AST_CrowdNav/ast/results/data'
-log_folder_name = 'ast_dsrnn_38'
-batch_runner_path = '/home/peter/policy_summarization/AST_CrowdNav/ast/batch_runner.py'
+base_log_dir = '/home/peterdu2/policy_summarization/AST_CrowdNav/ast/results/data'
+log_folder_name = 'ast_dsrnn_TEST'
+batch_runner_path = '/home/peterdu2/policy_summarization/AST_CrowdNav/ast/batch_runner.py'
 sim_config_path = model_dir_path + 'configs/config.py'
 
 

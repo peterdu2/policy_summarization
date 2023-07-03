@@ -124,14 +124,26 @@ class DSRNNCoupledSimulator(ASTSimulator):
 
     def create_coupled_render_axis(self):
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 7))
-        ax1.set_xlim(-10, 10)
-        ax1.set_ylim(-10, 10)
+        # ax1.set_xlim(-8, 9)
+        # ax1.set_ylim(-10.5, 6)
+        # #ax1.set_xlabel('x(m)', fontsize=16)
+        # #ax1.set_ylabel('y(m)', fontsize=16)
+        # ax2.set_xlim(-8, 9)
+        # ax2.set_ylim(-10.5, 6)
+        # #ax2.set_xlabel('x(m)', fontsize=16)
+        # #ax2.set_ylabel('y(m)', fontsize=16)
+        # ax1.set_box_aspect(1)
+        # ax2.set_box_aspect(1)
+        ax1.set_xlim(-8, 9)
+        ax1.set_ylim(-9, 8)
         #ax1.set_xlabel('x(m)', fontsize=16)
         #ax1.set_ylabel('y(m)', fontsize=16)
-        ax2.set_xlim(-10, 10)
-        ax2.set_ylim(-10, 10)
+        ax2.set_xlim(-8, 9)
+        ax2.set_ylim(-9, 8)
         #ax2.set_xlabel('x(m)', fontsize=16)
         #ax2.set_ylabel('y(m)', fontsize=16)
+        ax1.set_box_aspect(1)
+        ax2.set_box_aspect(1)
         return ax1, ax2
 
 
@@ -574,6 +586,172 @@ class DSRNNCoupledSimulator(ASTSimulator):
         for item in artists:
             item.remove() # there should be a better way to do this. For example,
             # initially use add_artist and draw_artist later on
+        for ax in self.coupled_axes:
+            for t in ax.texts:
+                t.set_visible(False)
+
+        self.render_frame += 1
+
+
+    def render_coupled_hist_traj(self, save_render, render_path, titles, num_frames, pause=0.05):
+        import matplotlib.pyplot as plt
+        import matplotlib.lines as mlines
+        from matplotlib import patches
+
+        import matplotlib.pyplot as plt
+        plt.rcParams["font.family"] = "Times New Roman"
+
+        plt.rcParams['animation.ffmpeg_path'] = '/usr/bin/ffmpeg'
+
+        robot_color = 'yellow'
+        goal_color = '#6DFF28'
+        arrow_color = '#000000'
+        arrow_style_robot = patches.ArrowStyle("->", head_length=5, head_width=3)
+        arrow_style_human = patches.ArrowStyle("->", head_length=5, head_width=3)
+
+
+        def calcFOVLineEndPoint(ang, point, extendFactor):
+            # choose the extendFactor big enough
+            # so that the endPoints of the FOVLine is out of xlim and ylim of the figure
+            FOVLineRot = np.array([[np.cos(ang), -np.sin(ang), 0],
+                                   [np.sin(ang), np.cos(ang), 0],
+                                   [0, 0, 1]])
+            point.extend([1])
+            # apply rotation matrix
+            newPoint = np.matmul(FOVLineRot, np.reshape(point, [3, 1]))
+            # increase the distance between the line start point and the end point
+            newPoint = [extendFactor * newPoint[0, 0], extendFactor * newPoint[1, 0], 1]
+            return newPoint
+
+
+        artists=[]
+        for cur_axis in range(2):
+            ax=self.coupled_axes[cur_axis]
+            ax.set_title(titles[cur_axis], fontsize=20, color='blue', fontweight='bold')
+
+            # add goal
+            goal=mlines.Line2D([self.envs[cur_axis].robot.gx], [self.envs[cur_axis].robot.gy], color=goal_color, marker='D', linestyle='None', markersize=10, label='Goal')
+            ax.add_artist(goal)
+            artists.append(goal)
+
+            arrowStartEndHumans =[]
+            arrowStartEndRobots = []
+
+            robot_1_rgb = (0.3961, 0.9098, 0.8549) # green one
+            robot_2_rgb = (0.9804, 0.8667, 0.3569) # yellow one
+
+            # Calculate alpha channel based on number of total frames
+            alpha = float(self.render_frame / num_frames) if float(self.render_frame / num_frames) < 1. else 1.
+
+            # add robot
+            robot_list = []
+            for ax_id in range(2):
+                if ax_id == 0:
+                    robot_color = robot_1_rgb + (alpha,) # holy fuck this is disgusting but tuples are immutable ¯\_(ツ)_/¯ 
+                else:
+                    robot_color = robot_2_rgb + (alpha,)
+                robotX,robotY=self.envs[ax_id].robot.get_position()
+
+                robot=plt.Circle((robotX,robotY), 0.6, fill=True, color=robot_color)
+                if self.render_frame > 17 and ax_id == 1: # This shit is specifically for hps10 video 5 cause the goal overlaps with the last blue circle
+                    pass
+                else:
+                    ax.add_artist(robot)
+                    artists.append(robot)
+
+                    # plt.legend([robot, goal], ['Robot', 'Goal'], fontsize=16)
+
+                    # compute orientation in each step and add arrow to show the direction
+                    radius = self.envs[ax_id].robot.radius
+
+                    robot_theta = self.envs[ax_id].robot.theta if self.envs[ax_id].robot.kinematics == 'unicycle' else np.arctan2(self.envs[ax_id].robot.vy, self.envs[ax_id].robot.vx)
+                    
+
+                    arrowStartEndRobots.append(((robotX, robotY), (robotX + radius * np.cos(robot_theta), robotY + radius * np.sin(robot_theta))))
+
+
+            for i, human in enumerate(self.envs[cur_axis].humans):
+                theta = np.arctan2(human.vy, human.vx)
+                arrowStartEndHumans.append(((human.px, human.py), (human.px + radius * np.cos(theta), human.py + radius * np.sin(theta))))
+
+            arrows_robots = [patches.FancyArrowPatch(*arrow, color=arrow_color, arrowstyle=arrow_style_robot)
+                    for arrow in arrowStartEndRobots]
+            for arrow in arrows_robots:
+                ax.add_artist(arrow)
+                artists.append(arrow)
+            
+            arrows_humans = [patches.FancyArrowPatch(*arrow, color=arrow_color, arrowstyle=arrow_style_human)
+                    for arrow in arrowStartEndHumans]
+            for arrow in arrows_humans:
+                pass    # fuck the human arrows 
+                # ax.add_artist(arrow)
+                # artists.append(arrow)
+
+
+            # draw FOV for the robot
+            # add robot FOV
+            if self.envs[cur_axis].robot_fov < np.pi * 2:
+                FOVAng = self.envs[0].robot_fov / 2
+                FOVLine1 = mlines.Line2D([0, 0], [0, 0], linestyle='--')
+                FOVLine2 = mlines.Line2D([0, 0], [0, 0], linestyle='--')
+
+
+                startPointX = robotX
+                startPointY = robotY
+                endPointX = robotX + radius * np.cos(robot_theta)
+                endPointY = robotY + radius * np.sin(robot_theta)
+
+                # transform the vector back to world frame origin, apply rotation matrix, and get end point of FOVLine
+                # the start point of the FOVLine is the center of the robot
+                FOVEndPoint1 = calcFOVLineEndPoint(FOVAng, [endPointX - startPointX, endPointY - startPointY], 20. / self.envs[cur_axis].robot.radius)
+                FOVLine1.set_xdata(np.array([startPointX, startPointX + FOVEndPoint1[0]]))
+                FOVLine1.set_ydata(np.array([startPointY, startPointY + FOVEndPoint1[1]]))
+                FOVEndPoint2 = calcFOVLineEndPoint(-FOVAng, [endPointX - startPointX, endPointY - startPointY], 20. / self.envs[cur_axis].robot.radius)
+                FOVLine2.set_xdata(np.array([startPointX, startPointX + FOVEndPoint2[0]]))
+                FOVLine2.set_ydata(np.array([startPointY, startPointY + FOVEndPoint2[1]]))
+
+                ax.add_artist(FOVLine1)
+                ax.add_artist(FOVLine2)
+                artists.append(FOVLine1)
+                artists.append(FOVLine2)
+
+            # add humans and change the color of them based on visibility
+            # human_circles = [plt.Circle(human.get_position(), human.radius, fill=False) for human in self.envs[cur_axis].humans]
+            human_circles = [plt.Circle(human.get_position(), 0.1, fill=True) for human in self.envs[cur_axis].humans]
+
+
+            for i in range(len(self.envs[cur_axis].humans)):
+                if self.render_frame % 1 == 0:
+                    ax.add_artist(human_circles[i])
+                    artists.append(human_circles[i])
+
+                    human_colour = (0,0,0) + (alpha,)
+                    # green: visible; red: invisible
+                    if self.envs[cur_axis].detect_visible(self.envs[cur_axis].robot, self.envs[cur_axis].humans[i], robot1=True):
+                        human_circles[i].set_color(c=human_colour)
+                    else:
+                        human_circles[i].set_color(c='r')
+                    # ax.text(self.envs[cur_axis].humans[i].px - 0.1, self.envs[cur_axis].humans[i].py - 0.1, str(i), color='black', fontsize=12)
+
+            # # Label state if collision or timeout
+            # state = self.sim_infos[cur_axis]
+            # if isinstance(state['info'], Collision):
+            #     ax.text(-9,7, 'COLLISION', color='red', fontsize=20)
+
+            ax.get_yaxis().set_visible(False)
+            ax.get_xaxis().set_visible(False)
+
+            plt.legend([goal, artists[3], artists[1], artists[2]], ['Goal', 'Human', r'$\mathscr{A}^{(hi)}$', r'$\mathscr{A}^{(med)}$'], fontsize=15, loc='lower right')
+
+        if save_render:
+            plt.savefig(render_path+'/'+format(self.render_frame, '04d')+'.png')
+
+        if pause > 0:
+            plt.pause(pause)
+
+        # for item in artists:
+        #     item.remove() # there should be a better way to do this. For example,
+        #     # initially use add_artist and draw_artist later on
         for ax in self.coupled_axes:
             for t in ax.texts:
                 t.set_visible(False)
